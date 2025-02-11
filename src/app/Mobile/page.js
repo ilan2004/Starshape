@@ -13,6 +13,7 @@ const Mobile = () => {
     <div>
       <Mobilephero/>
       <Gap/>
+      
       <DetailsMobile/>
       <MobApproach/>
       <Work/>

@@ -131,7 +131,8 @@ export default function Navbars() {
       <div className={styles.container}>
         <div className={styles.navbarBrand}>
 
-          <Link href='/' className={styles.dev}>HEXAINTELLI</Link>
+          <Link href='/' className={styles.dev}>
+          <img className={styles.genie} src='/Logos/NETGENIE2.svg' ></img></Link>
           <div className={styles.navLinks}>
             <NavigationMenu>
               <NavigationMenuList>

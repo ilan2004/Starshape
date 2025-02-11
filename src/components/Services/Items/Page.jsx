@@ -18,22 +18,6 @@ export const projects = [
     to: 'see more'
   },
   {
-    "title": "MOBILE APP DEVELOPMENT",
-    "Icon": "/2.svg",
-    "description":
-      "Elevate your business with custom mobile applications that offer seamless user experiences and robust functionality across all devices.",
-    "link": "/Mobile",
-    to: 'see more'
-  },
-  {
-    title: "CLOUD COMPUTING",
-    Icon: "/3.svg",
-    description:
-      "Empower your business with scalable cloud solutions tailored to streamline operations and enhance flexibility.",
-    link: "/Cloud",
-    to: 'see more'
-  },
-  {
     title: "E-Commerce",
     Icon: "/4.svg",
     description:
@@ -42,20 +26,21 @@ export const projects = [
     to: 'see more'
   },
   {
-    title: "MACHINE LEARNING",
-    Icon: "/5.svg",
-    description:
-      "Leverage the potential of machine learning to innovate and automate processes, driving predictive insights and enhancing decision-making.",
-    link: "/Machine",
+    "title": "SEO",
+    "Icon": "/2.svg",
+    "description":
+      "Elevate your business with custom mobile applications that offer seamless user experiences and robust functionality across all devices.",
+    "link": "/Mobile",
     to: 'see more'
   },
   {
-    title: "ERP SOFTWARE",
-    Icon: "/6.svg",
+    title: "PERFORMANCE MARKETING",
+    Icon: "/3.svg",
     description:
-      "Optimize your business operations with our comprehensive ERP software, integrating core processes to streamline efficiency and drive growth.",
-    link: "/ERP",
+      "Empower your business with scalable cloud solutions tailored to streamline operations and enhance flexibility.",
+    link: "/Cloud",
     to: 'see more'
   },
+
 ];
 

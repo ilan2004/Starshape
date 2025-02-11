@@ -8,7 +8,9 @@ export const Footer = () => {
     <section className={styles.footer}>
       <div className={styles.Container}>
         <div className={styles.header}>
-          <div className={styles.logo}>Hexaintelli</div>
+          <div className={styles.logo}>
+            <img src='/Logos/footer.svg'></img>
+          </div>
           <div className={styles.social}>
             <div className={styles.wrapper}>
             <GitHubLogoIcon className={styles.icon} />
@@ -28,7 +30,7 @@ export const Footer = () => {
               <br />
               Email:
               <br />
-              Hexaintelli@gmail.com
+              Netgenie@gmail.com
               <br />
             </p>
           </div>
