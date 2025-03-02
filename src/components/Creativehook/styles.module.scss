@@ -1,0 +1,10 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  
+  // Responsive layout adjustments
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+}

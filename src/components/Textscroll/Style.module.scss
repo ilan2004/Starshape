@@ -1,0 +1,105 @@
+.paragraph {
+    display: flex;
+    font-size: 30px;
+    line-height: 1;
+    padding: 40px;
+    max-width: 100vh;
+    color: white;
+    flex-wrap: wrap;
+    
+    .word {
+      position: relative;
+      margin-right: 12px;
+      margin-top: 12px;
+      
+      .shadow {
+        position: absolute;
+        opacity: 20%;
+      }
+    }
+  }
+  
+  .split {
+    width: 100%;
+    background-color: transparent;
+  }
+  
+  .new {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: flex-end;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  // Responsive styles
+  @media (max-width: 768px) {
+    .paragraph {
+      font-size: 24px;
+      padding: 30px 20px;
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .paragraph {
+      font-size: 18px;
+      padding: 20px 15px;
+      
+      .word {
+        margin-right: 8px;
+        margin-top: 8px;
+      }
+    }
+    
+    .new {
+      padding: 15px;
+    }
+  }
+  
+  // Dark mode support
+  @media (prefers-color-scheme: dark) {
+    .paragraph {
+      color: white;
+      
+      .word .shadow {
+        opacity: 15%;
+      }
+    }
+  }
+  
+  // Light mode adjustments
+  @media (prefers-color-scheme: light) {
+    .paragraph {
+      color: #333;
+      
+      .word .shadow {
+        opacity: 25%;
+      }
+    }
+  }
+  .bag {
+    width: 100%;
+    background-color: transparent;
+    height: 100vh;
+    
+    @media (max-width: 768px) {
+      height: 10vh;
+    }
+  }
+  .box {
+    width: 100%;
+    background-color: transparent;
+    height: 200vh;
+    
+    @media (max-width: 768px) {
+      height: 10vh;
+    }
+  }
+
+  .Scrolls{
+    @media (max-width: 768px) {
+        display: none;
+      }
+  }
