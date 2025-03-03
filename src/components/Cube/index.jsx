@@ -3,13 +3,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import styles from './style.module.scss';
-import { OrbitControls } from '@react-three/drei';
 import { useMotionValue, useSpring, useScroll, useTransform } from 'framer-motion';
 import { motion } from 'framer-motion-3d';
 import * as THREE from 'three';
 
 export default function CurvedStar() {
     const container = useRef(null);
+    const [canvasSize, setCanvasSize] = useState({ width: '100%', height: '100%' });
     const { scrollYProgress } = useScroll({
         target: container,
         offset: ['start start', 'end end']
@@ -17,18 +17,52 @@ export default function CurvedStar() {
     const progress = useTransform(scrollYProgress, [0, 1], [0, 5]);
     const smoothProgress = useSpring(progress, {damping: 20});
     
+    // Update canvas size based on screen width
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 480) {
+                // Larger canvas for mobile devices
+                setCanvasSize({ width: '100%', height: '100%' });
+            } else if (window.innerWidth <= 768) {
+                // Medium canvas for tablets
+                setCanvasSize({ width: '90%', height: '90%' });
+            } else {
+                // Full size canvas for desktop
+                setCanvasSize({ width: '100%', height: '100%' });
+            }
+        };
+        
+        // Set initial size
+        handleResize();
+        
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+        
+        // Clean up
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+    
     return (
         <div ref={container} className={styles.main}>
             <div className={styles.cube}>
-                <Canvas>
-                    <OrbitControls enableZoom={false} enablePan={false}/>
-                    {/* Increased ambient light intensity for overall brightness */}
-                    <ambientLight intensity={3}/>
-                    {/* Added second directional light for more illumination */}
-                    <directionalLight position={[2, 1, 1]} intensity={1.5}/>
-                    <directionalLight position={[-2, 1, -1]} intensity={0.8} color="#ffbb77"/>
-                    <CurvedNinjaStar progress={smoothProgress}/>
-                </Canvas>
+                <div className={styles.canvasContainer} style={{ 
+                    width: canvasSize.width, 
+                    height: canvasSize.height,
+                    margin: '0 auto',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    <Canvas>
+                        {/* Removed OrbitControls to disable mouse/touch interaction */}
+                        {/* Increased ambient light intensity for overall brightness */}
+                        <ambientLight intensity={3}/>
+                        {/* Added second directional light for more illumination */}
+                        <directionalLight position={[2, 1, 1]} intensity={1.5}/>
+                        <directionalLight position={[-2, 1, -1]} intensity={0.8} color="#ffbb77"/>
+                        <CurvedNinjaStar progress={smoothProgress}/>
+                    </Canvas>
+                </div>
             </div>
         </div>
     )
@@ -183,7 +217,7 @@ function CurvedNinjaStar({progress}) {
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 480) {
-                setStarSize(1.5); // Smaller size for mobile
+                setStarSize(2.0); // Increased size for mobile
             } else if (window.innerWidth <= 768) {
                 setStarSize(2.0); // Medium size for tablets
             } else {
