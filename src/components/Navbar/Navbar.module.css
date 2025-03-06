@@ -11,10 +11,10 @@
   }
   
   .navbar.scrolled {
-    padding: 16px 0;
-    backdrop-filter: blur(20px); /* Apply blur effect */
-    border-bottom: 2px solid #4c4646; /* Stylish border color when scrolled */
-    background-color: rgba(0, 0, 0, 0.7); /* Grayish transparent background */
+    padding: 12px 0;
+    border-bottom: 2px solid #000000;
+    border-style: dotted; /* Stylish border color when scrolled */
+    background-color: black;
   }
   
   .navbarBrand {
