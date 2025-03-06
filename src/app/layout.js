@@ -7,7 +7,7 @@ import styles from "./RootLayout.module.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Netgenie",
+  title: "Starshape",
   description: "Transform your ideas into reality with our expert-driven, creative tech solutions",
 };
 
