@@ -21,24 +21,16 @@ export default function CurvedStar() {
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 480) {
-                // Larger canvas for mobile devices
                 setCanvasSize({ width: '100%', height: '100%' });
             } else if (window.innerWidth <= 768) {
-                // Medium canvas for tablets
                 setCanvasSize({ width: '90%', height: '90%' });
             } else {
-                // Full size canvas for desktop
                 setCanvasSize({ width: '100%', height: '100%' });
             }
         };
         
-        // Set initial size
         handleResize();
-        
-        // Add event listener
         window.addEventListener('resize', handleResize);
-        
-        // Clean up
         return () => window.removeEventListener('resize', handleResize);
     }, []);
     
@@ -54,13 +46,10 @@ export default function CurvedStar() {
                     alignItems: 'center'
                 }}>
                     <Canvas>
-                        {/* Removed OrbitControls to disable mouse/touch interaction */}
-                        {/* Increased ambient light intensity for overall brightness */}
                         <ambientLight intensity={3}/>
-                        {/* Added second directional light for more illumination */}
                         <directionalLight position={[2, 1, 1]} intensity={1.5}/>
                         <directionalLight position={[-2, 1, -1]} intensity={0.8} color="#ffbb77"/>
-                        <CurvedNinjaStar progress={smoothProgress}/>
+                        <FlowerStar progress={smoothProgress}/>
                     </Canvas>
                 </div>
             </div>
@@ -68,7 +57,7 @@ export default function CurvedStar() {
     )
 }
 
-function CurvedNinjaStar({progress}) {
+function FlowerStar({progress}) {
     const mesh = useRef(null);
     const materialRef = useRef(null);
     const [starSize, setStarSize] = useState(2.5);
@@ -89,7 +78,6 @@ function CurvedNinjaStar({progress}) {
     // Configure texture settings
     useEffect(() => {
         if (heightMap && aoMap && roughnessMap && normalMap) {
-            // Apply repeat to make the texture detail more visible
             const repeat = 2;
             [heightMap, aoMap, roughnessMap, normalMap].forEach(map => {
                 map.wrapS = THREE.RepeatWrapping;
@@ -97,12 +85,11 @@ function CurvedNinjaStar({progress}) {
                 map.repeat.set(repeat, repeat);
             });
             
-            // Set normal map type
             normalMap.type = THREE.NormalMap;
         }
     }, [heightMap, aoMap, roughnessMap, normalMap]);
     
-    // Create a gradient texture - brighter volcanic colors
+    // Create an orange gradient texture
     useEffect(() => {
         const createGradientTexture = () => {
             const size = 512;
@@ -113,12 +100,9 @@ function CurvedNinjaStar({progress}) {
             const ctx = canvas.getContext('2d');
             const gradient = ctx.createLinearGradient(0, 0, size, 0);
             
-            // Brighter volcanic color stops
-            gradient.addColorStop(0.0, '#4a1010'); // Lightened base red
-            gradient.addColorStop(0.3, '#b62121'); // Brighter medium red
-            gradient.addColorStop(0.6, '#e84646'); // Vibrant red
-            gradient.addColorStop(0.9, '#ff7700'); // Bright orange
-            gradient.addColorStop(1.0, '#ffaa22'); // Yellow-orange glow at the edge
+            gradient.addColorStop(0.0, '#FF8800');
+            gradient.addColorStop(0.5, '#FF6600');
+            gradient.addColorStop(1.0, '#FF5500');
             
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, size, 1);
@@ -136,112 +120,94 @@ function CurvedNinjaStar({progress}) {
         }
     }, []);
     
-    // Create custom curved star shape
-    const createCurvedStarShape = () => {
+    // Create the flower-like pointed shape that matches the image
+    const createFlowerStarShape = () => {
         const shape = new THREE.Shape();
         
-        // Center hole parameters
-        const holeRadius = starSize * 0.2;
-        const hole = new THREE.Path();
-        hole.absarc(0, 0, holeRadius, 0, Math.PI * 2, true);
-        shape.holes.push(hole);
+        // 8 petals like in the image
+        const petals = 8;
+        const angleStep = (Math.PI * 2) / petals;
         
-        // Number of blades
-        const blades = 6;
-        const angleStep = (Math.PI * 2) / blades;
+        // Center of the star
+        const centerX = 0;
+        const centerY = 0;
         
-        // Blade parameters
-        const innerRadius = starSize * 0.3;
-        const outerRadius = starSize;
-        const curveControl = 0.4; // controls the curve amount
-        
-        // Start at the first point
-        let startAngle = 0;
-        let x = Math.cos(startAngle) * innerRadius;
-        let y = Math.sin(startAngle) * innerRadius;
-        shape.moveTo(x, y);
-        
-        // Create each blade
-        for (let i = 0; i < blades; i++) {
-            const angle1 = startAngle + angleStep * i;
-            const angle2 = startAngle + angleStep * (i + 1);
+        for (let i = 0; i < petals; i++) {
+            const angle = i * angleStep;
             
-            // First point (inner radius)
-            const x1 = Math.cos(angle1) * innerRadius;
-            const y1 = Math.sin(angle1) * innerRadius;
+            // Calculate the tip of the petal
+            const tipX = centerX + Math.cos(angle) * starSize;
+            const tipY = centerY + Math.sin(angle) * starSize;
             
-            // Outer point at the tip
-            const tipAngle = angle1 + angleStep / 2;
-            const xTip = Math.cos(tipAngle) * outerRadius;
-            const yTip = Math.sin(tipAngle) * outerRadius;
+            // Calculate inner points for the triangular shape
+            // These points create the "valley" between petals
+            const innerAngle1 = angle + angleStep * 0.5 - Math.PI/16;
+            const innerAngle2 = angle + angleStep * 0.5 + Math.PI/16;
             
-            // Last point (back to inner radius)
-            const x2 = Math.cos(angle2) * innerRadius;
-            const y2 = Math.sin(angle2) * innerRadius;
+            const innerRadius = starSize * 0.4; // Controls how deep the valley between petals is
             
-            // Control points for curves
-            const control1x = Math.cos(angle1 + angleStep * curveControl) * outerRadius * 0.8;
-            const control1y = Math.sin(angle1 + angleStep * curveControl) * outerRadius * 0.8;
+            const innerX1 = centerX + Math.cos(innerAngle1) * innerRadius;
+            const innerY1 = centerY + Math.sin(innerAngle1) * innerRadius;
             
-            const control2x = Math.cos(angle2 - angleStep * curveControl) * outerRadius * 0.8;
-            const control2y = Math.sin(angle2 - angleStep * curveControl) * outerRadius * 0.8;
+            const innerX2 = centerX + Math.cos(innerAngle2) * innerRadius;
+            const innerY2 = centerY + Math.sin(innerAngle2) * innerRadius;
             
-            // Draw the blade with curves
+            // For the first petal, move to the starting tip
             if (i === 0) {
-                shape.moveTo(x1, y1);
+                shape.moveTo(tipX, tipY);
             }
             
-            shape.bezierCurveTo(control1x, control1y, xTip, yTip, xTip, yTip);
-            shape.bezierCurveTo(xTip, yTip, control2x, control2y, x2, y2);
+            // Connect to the inner points to create valleys between petals
+            shape.lineTo(innerX1, innerY1);
+            shape.lineTo(centerX, centerY); // Go to center to create the inward point
+            shape.lineTo(innerX2, innerY2);
             
-            // For the last blade, close the shape
-            if (i === blades - 1) {
-                shape.closePath();
-            }
+            // Connect to the next petal's tip
+            const nextAngle = ((i + 1) % petals) * angleStep;
+            const nextTipX = centerX + Math.cos(nextAngle) * starSize;
+            const nextTipY = centerY + Math.sin(nextAngle) * starSize;
+            
+            shape.lineTo(nextTipX, nextTipY);
         }
         
+        shape.closePath();
         return shape;
     };
 
     // Create extrusion settings
     const extrudeSettings = {
         steps: 1,
-        depth: starSize * 0.15,
+        depth: starSize * 0.05,
         bevelEnabled: true,
-        bevelThickness: starSize * 0.05,
-        bevelSize: starSize * 0.05,
-        bevelSegments: 3
+        bevelThickness: starSize * 0.01,
+        bevelSize: starSize * 0.01,
+        bevelSegments: 1
     };
     
     // Update star size based on screen width
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 480) {
-                setStarSize(2.0); // Increased size for mobile
+                setStarSize(2.0);
             } else if (window.innerWidth <= 768) {
-                setStarSize(2.0); // Medium size for tablets
+                setStarSize(2.0);
             } else {
-                setStarSize(2.5); // Original size for desktop
+                setStarSize(2.5);
             }
         };
         
-        // Set initial size
         handleResize();
-        
-        // Add event listener
         window.addEventListener('resize', handleResize);
-        
-        // Clean up
         return () => window.removeEventListener('resize', handleResize);
     }, []);
     
-    // Add rotation animation with a slight glow effect
+    // Add rotation animation
     useFrame((state, delta) => {
         if (mesh.current) {
-            // Add a subtle automatic rotation when not scrolling
+            // Add a subtle automatic rotation
             mesh.current.rotation.y += delta * 0.1;
             
-            // Subtle pulsing effect for added visibility
+            // Subtle pulsing effect
             if (materialRef.current) {
                 materialRef.current.emissiveIntensity = 0.2 + Math.sin(state.clock.elapsedTime * 1.5) * 0.1;
             }
@@ -252,24 +218,27 @@ function CurvedNinjaStar({progress}) {
         <motion.group ref={mesh} rotation-y={progress} rotation-x={progress}>
             <mesh>
                 <extrudeGeometry 
-                    args={[createCurvedStarShape(), extrudeSettings]} 
+                    args={[createFlowerStarShape(), extrudeSettings]} 
                 />
                 <meshStandardMaterial 
                     ref={materialRef}
                     displacementMap={heightMap}
-                    displacementScale={0.05}
+                    displacementScale={0.02}
                     aoMap={aoMap}
-                    aoMapIntensity={0.6} // Reduced AO intensity to brighten dark areas
+                    aoMapIntensity={0.4}
                     normalMap={normalMap}
                     roughnessMap={roughnessMap}
-                    normalScale={new THREE.Vector2(1.5, 1.5)} // Slightly reduced for smoother appearance
-                    roughness={0.7} // Reduced for more reflectivity
-                    metalness={0.4} // Slightly increased for better reflections
-                    envMapIntensity={1.5} // Increased for more ambient reflections
-                    emissive="#ff5500" // Added emissive property for glow
-                    emissiveIntensity={0.2} // Subtle emissive effect
+                    normalScale={new THREE.Vector2(1.0, 1.0)}
+                    roughness={0.5}
+                    metalness={0.3}
+                    envMapIntensity={1.5}
+                    emissive="#FF6B00"
+                    emissiveIntensity={0.3}
+                    color="#FF6600" // Base orange color
                 />
             </mesh>
         </motion.group>
     );
 }
+
+// Replace the AngularStar component with FlowerStar in your CurvedStar component

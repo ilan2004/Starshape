@@ -1,10 +1,20 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbars from "src/components/Navbar/Page";
+import localFont from "next/font/local";
 import { NextUIProvider } from "@nextui-org/react";
 import styles from "./RootLayout.module.css";
-
+import Nav from "src/components/Nav/Nav";
 const inter = Inter({ subsets: ["latin"] });
+// const geistSans = localFont({
+//   src: "/fonts/GeistVF.woff",
+//   variable: "--font-geist-sans",
+//   weight: "100 900",
+// });
+// const geistMono = localFont({
+//   src: "/fonts/GeistMonoVF.woff",
+//   variable: "--font-geist-mono",
+//   weight: "100 900",
+// });
 
 export const metadata = {
   title: "Starshape",
@@ -17,15 +27,14 @@ export default function RootLayout({ children }) {
       <head>
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <link rel="icon" href="/Logos/Genie.svg" type="image/svg+xml" />
+        <link rel="icon" href="/Logos/saa.svg" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} ${styles.body}`}>
-        <NextUIProvider>
-          <Navbars />
+
+          <Nav/>
           <main className={styles.main}>
             {children}
           </main>
-        </NextUIProvider>
       </body>
     </html>
   );

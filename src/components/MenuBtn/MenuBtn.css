@@ -1,0 +1,147 @@
+/* logos */
+.navbar{
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.menu-logo {
+  position: absolute;
+  top: 2em;
+  left: 2em;
+  z-index: 9999;
+}
+.logo{
+  position: absolute;
+  top: 0em;
+  left: 2em;
+  z-index: 9;
+}
+
+.logo a,
+.menu-logo a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  font-family: "Schabo";
+  font-size: 60px;
+  font-weight: lighter;
+  z-index: 9999;
+}
+
+.menu-logo a {
+  color: #fff;
+}
+
+/* menu toggle btn */
+.menu-toggle {
+  position: fixed;
+  top: 2em;
+  right: 2em;
+  width: 120px;
+  height: 60px;
+  background-color: #0f0f0f;
+  border-radius: 8em;
+  transition: width 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transform-origin: right;
+  cursor: pointer;
+  z-index: 9999;
+
+}
+
+.menu-toggle.opened {
+  width: 60px;
+}
+
+.menu-copy {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  color: #fff;
+  transition: left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  z-index: 1;
+}
+
+.menu-copy p {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-toggle:hover .menu-copy {
+  left: 20px;
+}
+
+.menu-toggle.opened .menu-copy {
+  opacity: 0;
+}
+
+.menu-toggle-icon {
+  position: absolute;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  clip-path: circle(10% at 50% 50%);
+  background-color: burlywood;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.menu-toggle:hover .menu-toggle-icon {
+  clip-path: circle(35% at 50% 50%);
+}
+
+.menu-toggle.opened .menu-toggle-icon {
+  clip-path: circle(50% at 50% 50%);
+  transform: scale(1.125);
+}
+
+.hamburger {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  opacity: 0;
+}
+
+.menu-toggle:hover .hamburger,
+.menu-toggle.opened .hamburger {
+  top: 50%;
+  opacity: 1;
+}
+
+.menu-bar {
+  position: absolute;
+  width: 15px;
+  height: 1.5px;
+  background: #000;
+  transition-property: transform;
+  transition: all 250ms ease-out;
+}
+
+.menu-bar[data-position="top"] {
+  transform: translateY(-3px);
+}
+
+.menu-bar[data-position="bottom"] {
+  transform: translateY(3px);
+}
+
+.menu-toggle.opened .menu-bar[data-position="top"] {
+  transform: translateY(0) rotate(45deg) scaleX(1.05);
+}
+
+.menu-toggle.opened .menu-bar[data-position="bottom"] {
+  transform: translateY(0) rotate(-45deg) scaleX(1.05);
+}
