@@ -12,7 +12,6 @@ import "./Nav.css";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import MenuBtn from "../MenuBtn/MenuBtn";
-import Image from "next/image";
 
 const Nav = () => {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -187,13 +186,7 @@ const Nav = () => {
       <div className="navbar">
         <div className="logo">
           <Link href="/">
-          <Image
-          className="logoicon"
-          src="/logos/starshape.svg"
-          alt="Starshape Logo"
-          width={100} 
-           height={100}
-          />
+            <img className="logoicon" src="/logos/starshape.svg" />
           </Link>
         </div>
 
