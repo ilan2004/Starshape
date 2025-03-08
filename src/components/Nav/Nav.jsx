@@ -170,18 +170,18 @@ const Nav = () => {
 
   return (
     <div >
-      <div className="navbar">
+    <div className="navbar">
       <div className="logo">
-        <img className="logoicon" src="/logos/official.svg"></img>
+        <img className="logoicon" src="/logos/starshape.svg"></img>
       </div>
 
       <MenuBtn isOpen={isOpen} toggleMenu={toggleMenu} />
-      </div>
+    </div>
       <div className="menu" ref={menuRef}>
         <div className="col col-1">
-          <div className="menu-logo">
-            <a href="#">Avaro</a>
-          </div>
+          {/* <div className="menu-logo">
+            <a href="#">STARSHAPE</a>
+          </div> */}
           <div className="links">
             <div className="link">
               <Link href="/">Projects</Link>
@@ -203,13 +203,13 @@ const Nav = () => {
         <div className="col col-2">
           <div className="socials">
             <div className="sub-col">
-              <p>Avaro</p>
-              <p>9 quao Androe Rockfield</p>
-              <p>69001 Ontario</p>
-              <p>Canada</p>
+              <p>STARSHAPE</p>
+              <p>asasada</p>
+              <p>cscacao</p>
+              <p>bangalure</p>
               <br />
-              <p>contact@Avaro.fr</p>
-              <p>job@Avaro.fr</p>
+              <p>contact@STAR.fr</p>
+              <p>job@SHAPE.fr</p>
             </div>
             <div className="sub-col">
               <p>Instagram</p>
@@ -222,7 +222,7 @@ const Nav = () => {
           </div>
 
           <div className="header">
-            <h1>{splitTextIntoSpans("Avaro")}</h1>
+            <h1>{splitTextIntoSpans("SS")}</h1>
           </div>
         </div>
       </div>

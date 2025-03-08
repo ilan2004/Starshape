@@ -15,32 +15,30 @@ export const projects = [
     description:
       "Transform your digital presence with tailored web solutions that marry cutting-edge technology with user-centric design.",
     link: "/Web",
-    to: 'see more'
+    to: "see more",
   },
   {
     title: "E-Commerce",
-    Icon: "/4.svg",
+    Icon: "/2.svg",
     description:
-      "Unlock actionable insights and drive informed decisions with our advanced data analytics solutions, tailored to extract value from your data.",
+      "Launch and scale your online store effortlessly with Shopify and custom e-commerce solutions tailored to your business needs.",
     link: "/Ecommerce",
-    to: 'see more'
+    to: "see more",
   },
   {
-    "title": "SEO",
-    "Icon": "/2.svg",
-    "description":
-      "Elevate your business with custom mobile applications that offer seamless user experiences and robust functionality across all devices.",
-    "link": "/Mobile",
-    to: 'see more'
-  },
-  {
-    title: "PERFORMANCE MARKETING",
+    title: "POS Solutions",
     Icon: "/3.svg",
     description:
-      "Empower your business with scalable cloud solutions tailored to streamline operations and enhance flexibility.",
-    link: "/Cloud",
-    to: 'see more'
+      "Seamlessly manage sales, inventory, and billing with our POS solutions",
+    link: "/Pos",
+    to: "see more",
   },
-
+  {
+    title: "Data Analytics (Power BI)",
+    Icon: "/4.svg",
+    description:
+      "Unlock actionable insights with advanced Power BI dashboards, real-time analytics, and custom business intelligence solutions.",
+    link: "/DataAnalytics",
+    to: "see more",
+  },
 ];
-

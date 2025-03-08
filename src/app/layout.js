@@ -5,16 +5,13 @@ import { NextUIProvider } from "@nextui-org/react";
 import styles from "./RootLayout.module.css";
 import Nav from "src/components/Nav/Nav";
 const inter = Inter({ subsets: ["latin"] });
-// const geistSans = localFont({
-//   src: "/fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-// const geistMono = localFont({
-//   src: "/fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
+
+const modularFont = localFont({
+  src: "./fonts/Modular.ttf", // ✅ Correct path from `layout.js`
+  variable: "--font-modular",
+  weight: "400", // Adjust as needed
+  display: "swap",
+});
 
 export const metadata = {
   title: "Starshape",
@@ -27,7 +24,7 @@ export default function RootLayout({ children }) {
       <head>
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <link rel="icon" href="/Logos/saa.svg" type="image/svg+xml" />
+        <link rel="icon" href="/Logos/logo.svg" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} ${styles.body}`}>
 

@@ -12,8 +12,7 @@ const Mobile = () => {
   return (
     <div>
       <Mobilephero/>
-      <Gap/>
-      
+      <Gap/>  
       <DetailsMobile/>
       <MobApproach/>
       <Work/>

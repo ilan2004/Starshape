@@ -2,22 +2,28 @@
 .navbar{
   display: flex;
   justify-content: space-between;
-
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
 }
 
 .menu-logo {
-  position: absolute;
+  position: relative;
   top: 2em;
   left: 2em;
   z-index: 9999;
 }
 .logo{
-  position: absolute;
+  position: relative;
   top: 0em;
-  left: 2em;
-  z-index: 9;
-}
 
+  z-index: 9;
+
+}
+.logoicon{
+  height: 80%;
+  width: 80%;
+}
 .logo a,
 .menu-logo a {
   text-decoration: none;
@@ -35,7 +41,7 @@
 
 /* menu toggle btn */
 .menu-toggle {
-  position: fixed;
+  position: relative;
   top: 2em;
   right: 2em;
   width: 120px;
