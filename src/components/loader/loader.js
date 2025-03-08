@@ -10,7 +10,7 @@ export default function Loader({ onComplete }) {
     const windowWidth = window.innerWidth
     const wrapperWidth = isMobile ? 90 : 180
     const finalPosition = windowWidth - wrapperWidth
-    const stepDistance = finalPosition / 6
+    const stepDistance = finalPosition / 3 // Reduced steps to 3
     const tl = gsap.timeline()
 
     // Set initial styles based on device
@@ -24,9 +24,9 @@ export default function Loader({ onComplete }) {
     })
 
     gsap.set(".count", {
-      width: isMobile ? 540 : 1080,
+      width: isMobile ? 270 : 540, // Reduced width for 3 digits
       height: isMobile ? 180 : 360,
-      x: isMobile ? -540 : -1080,
+      x: isMobile ? -270 : -540, // Adjusted position for 3 digits
     })
 
     gsap.set(".digit", {
@@ -34,23 +34,25 @@ export default function Loader({ onComplete }) {
       height: isMobile ? 180 : 360,
     })
 
+    // Faster initial animation
     tl.to(".count", {
-      x: isMobile ? -450 : -900,
-      duration: 0.85,
-      delay: 0.5,
+      x: isMobile ? -180 : -360,
+      duration: 0.5, // Reduced from 0.85
+      delay: 0.3, // Reduced from 0.5
       ease: "power4.inOut",
     })
 
-    for (let i = 1; i <= 6; i++) {
-      const xPosition = (isMobile ? -450 : -900) + i * wrapperWidth
+    // Animation for each step (3 instead of 6)
+    for (let i = 1; i <= 3; i++) {
+      const xPosition = (isMobile ? -180 : -360) + i * wrapperWidth
       tl.to(".count", {
         x: xPosition,
-        duration: 0.85,
+        duration: 0.5, // Reduced from 0.85
         ease: "power4.inOut",
         onStart: () => {
           gsap.to(".count-wrapper", {
             x: stepDistance * i,
-            duration: 0.85,
+            duration: 0.5, // Reduced from 0.85
             ease: "power4.inOut",
           })
         },
@@ -59,19 +61,18 @@ export default function Loader({ onComplete }) {
 
     gsap.set(".revealer svg", { scale: 0 })
 
-    const delays = [6, 6.5, 7]
+    // Faster reveal animations
+    const delays = [3, 3.3, 3.6] // Reduced from [6, 6.5, 7]
     const maxScale = isMobile ? 25 : 45
 
     document.querySelectorAll(".revealer svg").forEach((el, i) => {
       gsap.to(el, {
         scale: maxScale,
-        duration: 1.5,
+        duration: 1, // Reduced from 1.5
         ease: "power4.inOut",
         delay: delays[i],
         onComplete: () => {
           if (i === delays.length - 1) {
-            // Don't manually remove the DOM element
-            // Just call the onComplete callback to let React handle unmounting
             if (onComplete) onComplete()
           }
         },
@@ -82,21 +83,21 @@ export default function Loader({ onComplete }) {
       onStart: () => {
         gsap.to(".toggle-btn", {
           scale: 1,
-          duration: 1,
+          duration: 0.7, // Reduced from 1
           ease: "power4.inOut",
         })
         gsap.to(".line p", {
           y: 0,
-          duration: 1,
-          stagger: 0.1,
+          duration: 0.7, // Reduced from 1
+          stagger: 0.07, // Reduced from 0.1
           ease: "power3.out",
         })
       },
       rotateY: 0,
       opacity: 1,
-      duration: 2,
+      duration: 1.2, // Reduced from 2
       ease: "power3.out",
-      delay: 8,
+      delay: 4.2, // Reduced from 8
     })
   }, [onComplete])
 
@@ -105,19 +106,10 @@ export default function Loader({ onComplete }) {
       <div className="count-wrapper">
         <div className="count">
           <div className="digit">
-            <h1>9</h1>
-          </div>
-          <div className="digit">
-            <h1>8</h1>
-          </div>
-          <div className="digit">
             <h1>7</h1>
           </div>
           <div className="digit">
             <h1>4</h1>
-          </div>
-          <div className="digit">
-            <h1>2</h1>
           </div>
           <div className="digit">
             <h1>0</h1>
@@ -132,15 +124,6 @@ export default function Loader({ onComplete }) {
           </div>
           <div className="digit">
             <h1>5</h1>
-          </div>
-          <div className="digit">
-            <h1>9</h1>
-          </div>
-          <div className="digit">
-            <h1>7</h1>
-          </div>
-          <div className="digit">
-            <h1>4</h1>
           </div>
           <div className="digit">
             <h1>0</h1>
