@@ -46,9 +46,9 @@ const Hero = ({ videoSrc }) => {
         <div className={styles.content} ref={contentRef}>
           <h1 className={styles.title}>Distinctive website solutions for  rising companies</h1>
           <p className={styles.subtitle}>Transform your ideas into reality with Creativity.</p>
-          <button className={styles.button}>
+          {/* <button className={styles.button}>
             Our Services
-          </button> 
+          </button>  */}
         </div>
       </div>
     </div>

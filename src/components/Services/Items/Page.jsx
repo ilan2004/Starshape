@@ -18,7 +18,7 @@ export const projects = [
     to: "see more",
   },
   {
-    title: "E-Commerce",
+    title: "E-Commerce Solutions",
     Icon: "/2.svg",
     description:
       "Launch and scale your online store effortlessly with Shopify and custom e-commerce solutions tailored to your business needs.",

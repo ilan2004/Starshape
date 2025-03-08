@@ -10,7 +10,7 @@ export const Work = () => {
         <div className={styles.title}>WORK WITH US</div>
         <div className={styles.description}></div>
         <button className={styles.button}>
-            Our Services
+            Our Works
         </button> 
         </div>
     </div>

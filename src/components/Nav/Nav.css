@@ -12,6 +12,7 @@
   transform-style: preserve-3d;
   perspective: 1000px;
   z-index: 99; /* Ensures the menu is above everything */
+  font-family: 'Criteriacf', sans-serif;
 }
 
 
@@ -23,7 +24,7 @@
   flex: 2;
 }
 
-.col {
+.menu .col {
   position: relative;
   height: 100%;
   padding: 10em 2em 2em 2em;

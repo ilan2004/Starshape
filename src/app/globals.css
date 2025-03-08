@@ -182,3 +182,32 @@ span.frame__demos-item:not(:first-child) {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "am";
+  src: url(/public/fonts/akkuratmono.ttf);
+}
+
+@font-face {
+  font-family: "db";
+  src: url(/public/fonts/druk-bold.otf);
+}
+
+@font-face {
+  font-family: "dh";
+  src: url(/fonts/druk-heavy.otf);
+}
+
+@font-face {
+  font-family: "dm";
+  src: url(/fonts/druk-medium.otf);
+}
+
+@font-face {
+  font-family: "ds";
+  src: url(/fonts/druk-super.otf);
+}
+@font-face {
+  font-family: "pp";
+  src: url(/fonts/ppneuemontreal-medium.woff);
+}
+

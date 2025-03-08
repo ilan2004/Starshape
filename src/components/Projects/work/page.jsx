@@ -11,47 +11,50 @@ import { useRouter } from "next/navigation";
 const Projectworks = () => {
   const router = useRouter();
   const lenisRef = useRef(null);
-
+  
   useEffect(() => {
     const lenis = new Lenis({
       smooth: true,
     });
-
+    
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
-
+    
     requestAnimationFrame(raf);
     lenisRef.current = lenis;
-
+    
     return () => lenis.destroy();
   }, []);
-
+  
   const projectsData = [
     {
       id: 1,
       name: "Dion power",
       imageUrl: "projects/scooter.jpg",
+      forward: '/Works/Dion',
     },
     {
       id: 2,
       name: "WallpaperWale",
       imageUrl: "projects/wallpaper.jpg",
+      forward: '/Works/Wallpaperwale',
     },
     {
       id: 3,
       name: "Pulikkalfuels",
       imageUrl: "projects/petrol.jpg",
+      forward: '/Works/pulikkalfuels',
     },
     {
       id: 4,
       name: "Raphael media",
       imageUrl: "projects/camera.jpg",
+      forward: '/Works/raphaelmedia',
     },
-
   ];
-
+  
   function slideInOut() {
     document.documentElement.animate(
       [
@@ -71,7 +74,7 @@ const Projectworks = () => {
         pseudoElement: "::view-transition-old(root)",
       }
     );
-
+    
     document.documentElement.animate(
       [
         {
@@ -89,17 +92,17 @@ const Projectworks = () => {
       }
     );
   }
-
+  
   const handleNavigation = (e, path) => {
     e.preventDefault();
-
+    
     setTimeout(() => {
       router.push(path, {
         onTransitionReady: slideInOut,
       });
     }, 200);
   };
-
+  
   return (
     <div className="page">
       <section className="work-hero">
@@ -110,7 +113,7 @@ const Projectworks = () => {
           </AnimatedCopy>
         </div>
       </section>
-
+      
       <section className="projects">
         {projectsData.map((project) => (
           <div className="project" key={project.id}>
@@ -118,8 +121,8 @@ const Projectworks = () => {
               <ParallaxImage src={project.imageUrl} alt={project.name} />
               <div className="project-title">
                 <a
-                  href="/project"
-                  onClick={(e) => handleNavigation(e, "/project")}
+                  href={project.forward}
+                  onClick={(e) => handleNavigation(e, project.forward)}
                 >
                   <AnimatedH1 animateOnScroll={true}>{project.name}</AnimatedH1>
                 </a>
@@ -128,7 +131,7 @@ const Projectworks = () => {
           </div>
         ))}
       </section>
-
+      
       <Footer />
     </div>
   );

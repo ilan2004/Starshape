@@ -22,6 +22,8 @@
   color: white;
   line-height: 0.85;
   text-transform: uppercase;
+  font-family: "dh";
+  font-weight: lighter;
 }
 
 .work-hero p {
@@ -69,6 +71,8 @@
   display: block;
   padding: 20px;
   border-radius: 4px;
+  font-family: "dh";
+  font-weight: lighter;
 }
 
 /* Optional hover state for better UX */

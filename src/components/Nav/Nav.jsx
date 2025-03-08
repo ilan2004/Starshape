@@ -205,7 +205,7 @@ const Nav = () => {
               <Link href="/" onClick={closeMenu}>Agency</Link>
             </div>
             <div className="link">
-              <Link href="/" onClick={closeMenu}>Contact</Link>
+              <Link href="/Contact" onClick={closeMenu}>Contact</Link>
             </div>
           </div>
           <div className="video-wrapper">

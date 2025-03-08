@@ -49,6 +49,7 @@
     flex-direction: column;
     align-items: flex-start;
     display: flex;
+    font-family: 'Criteriacf', sans-serif;
   }
   .details{
     display: flex;
