@@ -41,4 +41,12 @@ export const projects = [
     link: "/DataAnalytics",
     to: "see more",
   },
+  {
+    title: "AI Animated Ads",
+    Icon: "/1.svg",
+    description:
+      "Unlock actionable insights with advanced Power BI dashboards, real-time analytics, and custom business intelligence solutions.",
+    link: "/DataAnalytics",
+    to: "see more",
+  },
 ];

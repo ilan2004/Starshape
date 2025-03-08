@@ -1,0 +1,13 @@
+.animated-copy [class^="line-"] {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.animated-copy [class^="line-inner-"] {
+  position: relative;
+  display: block;
+  will-change: transform;
+}

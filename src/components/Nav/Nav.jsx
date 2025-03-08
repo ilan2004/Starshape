@@ -7,6 +7,7 @@ import {
   useLayoutEffect,
 } from "react";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import "./Nav.css";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
@@ -17,6 +18,7 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const isInitializedRef = useRef(false);
+  const pathname = usePathname();
 
   useLayoutEffect(() => {
     gsap.registerPlugin(CustomEase);
@@ -47,6 +49,13 @@ const Nav = () => {
       isInitializedRef.current = true;
     }
   }, []);
+
+  // Close menu when pathname changes (page navigation)
+  useEffect(() => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  }, [pathname]);
 
   const animateMenu = useCallback((open) => {
     if (!menuRef.current) {
@@ -150,9 +159,13 @@ const Nav = () => {
 
   const toggleMenu = useCallback(() => {
     if (!isAnimating) {
-      setIsOpen((prevIsOpen) => {
-        return !prevIsOpen;
-      });
+      setIsOpen((prevIsOpen) => !prevIsOpen);
+    }
+  }, [isAnimating]);
+
+  const closeMenu = useCallback(() => {
+    if (!isAnimating && isOpen) {
+      setIsOpen(false);
     }
   }, [isAnimating, isOpen]);
 
@@ -169,35 +182,34 @@ const Nav = () => {
   };
 
   return (
-    <div >
-    <div className="navbar">
-      <div className="logo">
-        <img className="logoicon" src="/logos/starshape.svg"></img>
-      </div>
+    <div>
+      <div className="navbar">
+        <div className="logo">
+          <Link href="/">
+            <img className="logoicon" src="/logos/starshape.svg" alt="Logo" />
+          </Link>
+        </div>
 
-      <MenuBtn isOpen={isOpen} toggleMenu={toggleMenu} />
-    </div>
+        <MenuBtn isOpen={isOpen} toggleMenu={toggleMenu} />
+      </div>
       <div className="menu" ref={menuRef}>
         <div className="col col-1">
-          {/* <div className="menu-logo">
-            <a href="#">STARSHAPE</a>
-          </div> */}
           <div className="links">
             <div className="link">
-              <Link href="/">Projects</Link>
+              <Link href="/Works" onClick={closeMenu}>Projects</Link>
             </div>
             <div className="link">
-              <Link href="/">Expertise</Link>
+              <Link href="/" onClick={closeMenu}>Expertise</Link>
             </div>
             <div className="link">
-              <Link href="/">Agency</Link>
+              <Link href="/" onClick={closeMenu}>Agency</Link>
             </div>
             <div className="link">
-              <Link href="/">Contact</Link>
+              <Link href="/" onClick={closeMenu}>Contact</Link>
             </div>
           </div>
           <div className="video-wrapper">
-            <video src={"/video.mp4"} muted autoPlay loop />
+            <video src="/video.mp4" muted autoPlay loop />
           </div>
         </div>
         <div className="col col-2">

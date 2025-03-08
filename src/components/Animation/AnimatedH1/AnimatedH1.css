@@ -1,0 +1,11 @@
+.animated-h1 [class^="line-"] {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  display: block;
+  overflow: hidden;
+}
+
+.animated-h1 [class^="line-inner-"] {
+  position: relative;
+  display: block;
+  will-change: transform;
+}

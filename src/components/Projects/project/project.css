@@ -1,0 +1,145 @@
+.project-hero {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 8em;
+}
+
+.project-hero .col {
+  flex: 1;
+}
+
+.project-hero-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.project-hero-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.project-hero .col:nth-child(2) .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4em;
+}
+
+.project-page-title h1 {
+  margin-bottom: 1em;
+  width: 75%;
+}
+
+.project-hero .sub-col h3 {
+  margin: 0.25em 0;
+}
+
+.project-hero .col:nth-child(2) .container .row {
+  display: flex;
+  gap: 2em;
+  margin-bottom: 2em;
+}
+
+.project-hero .col:nth-child(2) .container .row .sub-col {
+  flex: 1;
+}
+
+.project-info {
+  position: relative;
+  width: 100%;
+  padding: 4em 0 4em 0;
+}
+
+.project-info .container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.project-info .container .col {
+  flex: 1;
+}
+
+.project-info .container .col p {
+  margin-bottom: 3em;
+}
+
+.project-info-img-1 {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+}
+
+.project-info-img-1-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.stat {
+  border-top: 1px solid rgba(255, 255, 255, 0.125);
+  display: flex;
+  padding-top: 20px;
+  justify-content: space-between;
+  margin-bottom: 8em;
+}
+
+.stat h1 {
+  font-size: 15vw;
+}
+
+.project-preview-img {
+  position: relative;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.project-preview-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.project-info-outro {
+  padding: 10em 0;
+}
+
+@media (max-width: 900px) {
+  .project-hero {
+    height: 200svh;
+    flex-direction: column-reverse;
+  }
+
+  .project-hero .col:nth-child(2) .container {
+    padding: 20px;
+  }
+
+  .project-hero .col:nth-child(2) .container .row {
+    flex-direction: column;
+  }
+
+  .project-page-title h1 {
+    margin-bottom: 2em;
+  }
+
+  .project-info .container {
+    width: 100%;
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  .stat h1 {
+    font-size: 20vw;
+  }
+}

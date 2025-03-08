@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { NextUIProvider } from "@nextui-org/react";
 import styles from "./RootLayout.module.css";
 import Nav from "src/components/Nav/Nav";
+import { ViewTransitions } from "next-view-transitions";
 const inter = Inter({ subsets: ["latin"] });
 
 const modularFont = localFont({
@@ -20,6 +21,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ViewTransitions>
     <html lang="en">
       <head>
         <title>{metadata.title}</title>
@@ -34,5 +36,6 @@ export default function RootLayout({ children }) {
           </main>
       </body>
     </html>
+    </ViewTransitions>
   );
 }
