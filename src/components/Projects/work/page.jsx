@@ -1,140 +1,118 @@
-"use client";
-import './work.css'
-import AnimatedH1 from "src/components/Animation/AnimatedH1/AnimatedH1";
-import AnimatedCopy from "src/components/Animation/AnimatedCopy/AnimatedCopy";
-import ParallaxImage from "src/components/Animation/ParallaxImage/ParallaxImage";
-import { Footer } from "src/components/Footer/page";
-import { useEffect, useRef } from "react";
-import Lenis from "lenis";
-import { useRouter } from "next/navigation";
+'use client'
+import { useState } from "react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { caseStudies, getAllCategories } from "./caseStudies.js";
+import styles from "./work.module.css";
 
-const Projectworks = () => {
-  const router = useRouter();
-  const lenisRef = useRef(null);
-  
-  useEffect(() => {
-    const lenis = new Lenis({
-      smooth: true,
-    });
-    
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    
-    requestAnimationFrame(raf);
-    lenisRef.current = lenis;
-    
-    return () => lenis.destroy();
-  }, []);
-  
-  const projectsData = [
-    {
-      id: 1,
-      name: "Dion power",
-      imageUrl: "projects/scooter.jpg",
-      forward: '/Works/Dion',
-    },
-    {
-      id: 2,
-      name: "WallpaperWale",
-      imageUrl: "projects/wallpaper.jpg",
-      forward: '/Works/Wallpaperwale',
-    },
-    {
-      id: 3,
-      name: "Pulikkalfuels",
-      imageUrl: "projects/petrol.jpg",
-      forward: '/Works/pulikkalfuels',
-    },
-    {
-      id: 4,
-      name: "Raphael media",
-      imageUrl: "projects/camera.jpg",
-      forward: '/Works/raphaelmedia',
-    },
-  ];
-  
-  function slideInOut() {
-    document.documentElement.animate(
-      [
-        {
-          opacity: 1,
-          transform: "scale(1)",
-        },
-        {
-          opacity: 0.4,
-          transform: "scale(0.5)",
-        },
-      ],
-      {
-        duration: 1500,
-        easing: "cubic-bezier(0.87, 0, 0.13, 1)",
-        fill: "forwards",
-        pseudoElement: "::view-transition-old(root)",
-      }
-    );
-    
-    document.documentElement.animate(
-      [
-        {
-          clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
-        },
-        {
-          clipPath: "polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)",
-        },
-      ],
-      {
-        duration: 1500,
-        easing: "cubic-bezier(0.87, 0, 0.13, 1)",
-        fill: "forwards",
-        pseudoElement: "::view-transition-new(root)",
-      }
-    );
-  }
-  
-  const handleNavigation = (e, path) => {
-    e.preventDefault();
-    
-    setTimeout(() => {
-      router.push(path, {
-        onTransitionReady: slideInOut,
-      });
-    }, 200);
-  };
-  
+export default function CaseStudiesPortfolio() {
+  const [activeCategory, setActiveCategory] = useState("ALL");
+  const allCategories = getAllCategories();
+
+  // Filter case studies based on active category
+  const filteredCaseStudies =
+    activeCategory === "ALL" 
+      ? caseStudies 
+      : caseStudies.filter((study) => study.categories.includes(activeCategory));
+
   return (
-    <div className="page">
-      <section className="work-hero">
-        <div className="container">
-          <AnimatedH1 delay={1}>From vision to victory</AnimatedH1>
-          <AnimatedCopy delay={1.2} animateOnScroll={false}>
-            Elevating digital marketing excellence through strategic innovation
-          </AnimatedCopy>
+    <section className={styles.section}>
+      {/* Radial gradient background effect */}
+      <div className={styles.container}>
+        <div className={styles.backgroundGradient}></div>
+
+        {/* Header */}
+        <div className={styles.header}>
+          <h2 className={styles.categoryLabel}>Our Works</h2>
+          <h1 className={styles.title}>
+            Get inspired by our
+            <br className={styles.lineBreak} /> awesome work
+          </h1>
         </div>
-      </section>
-      
-      <section className="projects">
-        {projectsData.map((project) => (
-          <div className="project" key={project.id}>
-            <div className="project-banner-img">
-              <ParallaxImage src={project.imageUrl} alt={project.name} />
-              <div className="project-title">
-                <a
-                  href={project.forward}
-                  onClick={(e) => handleNavigation(e, project.forward)}
-                >
-                  <AnimatedH1 animateOnScroll={true}>{project.name}</AnimatedH1>
-                </a>
+
+        {/* Category filters */}
+        <div className={styles.categoryFilter}>
+          <p className={styles.categoryText}>Category:</p>
+          <div className={styles.filterButtons}>
+            <button
+              onClick={() => setActiveCategory("ALL")}
+              className={`${styles.filterButton} ${
+                activeCategory === "ALL" ? styles.activeFilter : styles.inactiveFilter
+              }`}
+            >
+              ALL
+            </button>
+
+            {allCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`${styles.filterButton} ${
+                  activeCategory === category ? styles.activeFilter : styles.inactiveFilter
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Case study cards */}
+        <div className={styles.caseStudyGrid}>
+          {filteredCaseStudies.map((study) => (
+            <div key={study.id} className={styles.caseStudyCard}>
+              {/* Logo overlay */}
+              <div className={styles.caseStudyLogo}>
+                {/* Using regular img tag instead of next/image */}
+                <img
+                  src={study.logoSrc || "/placeholder.svg"}
+                  alt={`${study.title} logo`}
+                  width={80}
+                  height={80}
+                  style={{ objectFit: "contain" }}
+                />
+              </div>
+
+              {/* Main image */}
+              <div className={styles.caseStudyImage}>
+                {/* Using regular img tag with absolute positioning to mimic the fill property */}
+                <img 
+                  src={study.imageSrc || "/placeholder.svg"} 
+                  alt={study.title}
+                  style={{ 
+                    objectFit: "cover",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%"
+                  }}
+                />
+              </div>
+
+              {/* Content */}
+              <div className={styles.caseStudyContent}>
+                <h3 className={styles.caseStudyTitle}>{study.title}</h3>
+
+                {/* Tags */}
+                <div className={styles.tagContainer}>
+                  {study.categories.map((category) => (
+                    <span key={`${study.id}-${category}`} className={styles.tag}>
+                      {category}
+                    </span>
+                  ))}
+                </div>
+
+                <p className={styles.caseStudyDescription}>{study.description}</p>
+
+                <div className={styles.arrowContainer}>
+                  <ArrowRight className={styles.arrow} />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </section>
-      
-      <Footer />
-    </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
-};
-
-export default Projectworks;
+}
