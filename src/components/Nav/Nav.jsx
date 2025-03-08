@@ -185,9 +185,9 @@ const Nav = () => {
     <div>
       <div className="navbar">
         <div className="logo">
-          <Link href="/">
+          {/* <Link href="/"> */}
             <img className="logoicon" src="/logos/starshape.svg" />
-          </Link>
+          {/* </Link> */}
         </div>
 
         <MenuBtn isOpen={isOpen} toggleMenu={toggleMenu} />
