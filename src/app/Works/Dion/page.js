@@ -38,7 +38,7 @@ const Dion = () => {
               <div className="project-hero-img-wrapper">
                 <ParallaxImage
                   src="/mockd.png"
-                  alt=""
+                  alt="Dion Power dashboard interface"
                   speed={0.2}
                 />
               </div>
@@ -55,7 +55,7 @@ const Dion = () => {
                     Client
                   </AnimatedCopy>
                   <AnimatedCopy delay={1.25} tag="h3" animateOnScroll={false}>
-                    RIBU 
+                    DION POWER
                   </AnimatedCopy>
                 </div>
                 <div className="sub-col">
@@ -63,7 +63,7 @@ const Dion = () => {
                     Services
                   </AnimatedCopy>
                   <AnimatedCopy delay={1.25} tag="h3" animateOnScroll={false}>
-                    WEBSITE , DASHBOARD , INVOICE GENRATOR 
+                    CUSTOM DASHBOARD, ORDER MANAGEMENT, INVOICE GENERATOR
                   </AnimatedCopy>
                 </div>
               </div>
@@ -71,9 +71,7 @@ const Dion = () => {
                 <div className="sub-col"></div>
                 <div className="sub-col">
                   <AnimatedCopy delay={1.5}>
-                    Through collaborative strategy and innovative digital
-                    solutions, we helped Northstar establish a stronger online
-                    presence.
+                    We developed a comprehensive management system for Dion Power, featuring multi-level authentication, order tracking, invoice generation, and detailed battery analytics for their electric vehicle solutions.
                   </AnimatedCopy>
                 </div>
               </div>
@@ -88,34 +86,15 @@ const Dion = () => {
             </div>
             <div className="col">
               <AnimatedCopy>
-                Pulse Digital partnered with Northstar Innovations to develop a
-                comprehensive interactive campaign that would strengthen their
-                market position and expand their digital footprint. The project
-                focused on creating engaging, conversion-driven content that
-                resonated with their target audience while maintaining brand
-                consistency across all platforms.
+                Our partnership with Dion Power involved creating a sophisticated order and inventory management system with a powerful admin dashboard to streamline their lithium-ion battery business operations. The project focused on developing a centralized platform that could track orders, manage dealer relationships, monitor battery specifications, and generate detailed invoices.
               </AnimatedCopy>
 
               <AnimatedCopy delay={0.15}>
-                Our strategy involved a multi-channel approach combining social
-                media optimization, content marketing, and targeted digital
-                advertising. We developed custom graphics, interactive elements,
-                and compelling narratives that highlighted Northstar's
-                innovative solutions. The campaign featured responsive design
-                elements that adapted seamlessly to different devices, ensuring
-                a consistent user experience regardless of how customers
-                accessed the content.
+                We built a custom solution with multi-level authentication for users, managers, and administrators. The system's core is a feature-rich dashboard that provides real-time analytics on orders, companies, and invoices. The admin dashboard includes detailed tracking of battery specifications such as voltage and current, while also managing product information, service numbers, and chassis details for Dion Power's electric vehicle battery solutions.
               </AnimatedCopy>
 
               <AnimatedCopy delay={0.3}>
-                The results exceeded initial projections, with Northstar
-                experiencing a 38% increase in qualified leads and 42% growth in
-                social media engagement. Website traffic from organic searches
-                improved significantly, and average session duration increased
-                by nearly three minutes. This project demonstrated how strategic
-                digital marketing can transform brand perception and drive
-                meaningful business outcomes when executed with creativity and
-                precision.
+                The system now efficiently handles Dion Power's entire workflow from order receipt through delivery, with comprehensive tracking of technical specifications, customer information, and payment details. The dashboard displays critical business metrics including total orders (590), registered companies (20), and generated invoices (87), providing executives with valuable insights into business performance across various electric vehicle segments.
               </AnimatedCopy>
             </div>
           </div>
@@ -123,91 +102,49 @@ const Dion = () => {
 
         <section className="project-info">
           <div className="container">
-            <div className="col"></div>
             <div className="col">
-              <div className="project-info-img-1">
+            <div className="project-info-img-1">
                 <div className="project-info-img-1-wrapper">
                   <ParallaxImage
-                    src="/project/project-img-2.jpg"
-                    alt=""
+                    src="/projects/Dion/invoice.png"
+                    alt="Dion Power custom invoice generator"
                     speed={0.2}
                   />
                 </div>
               </div>
             </div>
+            <div className="col">
+              <div className="project-info-img-1">
+                <div className="project-info-img-1-wrapper">
+                  <ParallaxImage
+                    src="/projects/Dion/admin.png"
+                    alt="Dion Power admin dashboard"
+                    speed={0.2}
+                  />
+                </div>
+              </div>
+              
+            </div>
           </div>
         </section>
 
         <section className="project-info">
           <div className="container">
             <div className="col">
-              <AnimatedCopy tag="h3">Strategy</AnimatedCopy>
+              <AnimatedCopy tag="h3">Dashboard Features</AnimatedCopy>
             </div>
             <div className="col">
               <AnimatedCopy>
-                We implemented a strategic multi-platform approach for Pulse
-                Digital's campaign, beginning with comprehensive audience
-                analysis to identify key engagement opportunities. Our tactics
-                included creating custom interactive content for Instagram and
-                LinkedIn, developing targeted Google and Meta ad campaigns with
-                A/B tested creative assets, and producing a series of thought
-                leadership articles distributed through industry newsletters. We
-                further enhanced engagement through virtual events and
-                interactive website elements that encouraged visitor
-                participation while collecting valuable user data to
-                continuously refine our targeting strategy.
+                The Dion Power administration dashboard offers comprehensive order management with detailed tracking of battery specifications, delivery status, and payment information. Administrators can view critical metrics at a glance, including total orders (590), registered companies (20), and generated invoices (87), with visual trend indicators for performance monitoring over time.
               </AnimatedCopy>
-            </div>
-          </div>
-        </section>
-
-        <section className="project-info">
-          <div className="container">
-            <div className="col">
-              <AnimatedCopy tag="h3">Campaign Performance</AnimatedCopy>
-            </div>
-            <div className="col">
-              <div className="stat">
-                <AnimatedH1 animateOnScroll={true} direction="top">
-                  97.4K
-                </AnimatedH1>
-                <p>Video Views</p>
-              </div>
-
-              <div className="stat">
-                <AnimatedH1 animateOnScroll={true} direction="top">
-                  3.8K
-                </AnimatedH1>
-                <p>Total Engagement</p>
-              </div>
-
-              <div className="stat">
-                <AnimatedH1 animateOnScroll={true} direction="top">
-                  45.6K
-                </AnimatedH1>
-                <p>Total Reach</p>
-              </div>
-
-              <div className="stat">
-                <AnimatedH1 animateOnScroll={true} direction="top">
-                  512
-                </AnimatedH1>
-                <p>Conversions</p>
-              </div>
-
-              <div className="stat">
-                <AnimatedH1 animateOnScroll={true} direction="top">
-                  183.7K
-                </AnimatedH1>
-                <p>Impressions</p>
-              </div>
-
-              <div className="stat">
-                <AnimatedH1 animateOnScroll={true} direction="top">
-                  4.2K
-                </AnimatedH1>
-                <p>Interactions</p>
-              </div>
+              
+              <AnimatedCopy delay={0.15}>
+                The system features powerful record management capabilities, including the ability to add new records, search across all fields, and manage detailed battery specifications. Each order entry tracks critical information including serial numbers, dealer details, office location, payment status, delivery dates, order status, vehicle brand and model, and technical specifications such as battery voltage.
+              </AnimatedCopy>
+              
+              <AnimatedCopy delay={0.3}>
+                Users benefit from a streamlined interface with navigation between Orders, Invoices, Companies, Accounts, and Settings. The dashboard provides robust record management with capabilities to edit, delete, or download order information. The system handles multiple vehicle brands including HeroElectric, JoyEBike, and others, while providing detailed tracking of battery specifications essential for Dion Power's quality assurance and service operations.
+              </AnimatedCopy>
             </div>
           </div>
         </section>
@@ -215,8 +152,8 @@ const Dion = () => {
         <section className="project-preview-img">
           <div className="project-preview-img-wrapper">
             <ParallaxImage
-              src="/project/project-img-3.jpg"
-              alt=""
+              src="/projects/Dion/dashboard.png"
+              alt="Dion Power dashboard interface showing order details and analytics"
               speed={0.2}
             />
           </div>
@@ -225,31 +162,15 @@ const Dion = () => {
         <section className="project-info project-info-outro">
           <div className="container">
             <div className="col">
-              <AnimatedCopy tag="h3">Execution</AnimatedCopy>
+              <AnimatedCopy tag="h3">Technical Implementation</AnimatedCopy>
             </div>
             <div className="col">
               <AnimatedCopy>
-                For the Pulse Digital campaign, we implemented a multi-faceted
-                digital strategy centered on audience engagement and conversion
-                optimization. Our team developed custom-designed interactive
-                elements across all touchpoints, including shoppable Instagram
-                posts, targeted LinkedIn content, and a series of
-                performance-optimized landing pages. We leveraged data-driven
-                insights to identify peak engagement windows and adjusted
-                content delivery accordingly, ensuring maximum visibility within
-                the target demographic.
+                For Dion Power's management system, we developed a comprehensive solution with multiple authentication layers and robust data tracking capabilities. The dashboard tracks detailed technical specifications including battery voltage, battery current, chassis numbers, and service information. The system manages complex relationships between dealers, products, and service locations while maintaining detailed records of order statuses, from placement through delivery.
               </AnimatedCopy>
 
               <AnimatedCopy delay={0.15}>
-                Content creation focused on storytelling that highlighted
-                Northstar's unique value proposition while addressing specific
-                pain points identified through customer research. We deployed
-                A/B testing protocols for all key campaign elements, allowing us
-                to refine messaging and visual assets based on real-time
-                performance data. This adaptive approach enabled us to pivot
-                quickly in response to engagement metrics, maximizing campaign
-                effectiveness through continuous optimization throughout the
-                project lifecycle.
+                Our technical implementation includes a sophisticated invoice generation system that creates professional invoices with detailed battery specifications and service information. The dashboard provides administrators with powerful search capabilities across all fields and comprehensive data management tools. We incorporated visual analytics with trend charts for orders, companies, and invoices, giving management valuable insights into business performance and operational efficiency in their growing electric vehicle battery business.
               </AnimatedCopy>
             </div>
           </div>
