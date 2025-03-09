@@ -13,7 +13,7 @@ import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import MenuBtn from "../MenuBtn/MenuBtn";
 import Image from 'next/image';
-import StarShapeLogo from '/public/logos/starshape.svg';
+import StarShapeLogo from '/public/starshape.svg';
 
 const Nav = () => {
   const [isAnimating, setIsAnimating] = useState(false);
