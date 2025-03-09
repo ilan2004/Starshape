@@ -120,57 +120,64 @@ function FlowerStar({progress}) {
         }
     }, []);
     
-    // Create the flower-like pointed shape that matches the image
-    const createFlowerStarShape = () => {
+    // Create the custom star shape from the provided SVG path
+    const createCustomStarShape = () => {
         const shape = new THREE.Shape();
         
-        // 8 petals like in the image
-        const petals = 8;
-        const angleStep = (Math.PI * 2) / petals;
+        // Parse the SVG path data
+        const svgPath = `M 115.73 20 L 98.2 91.46 L 195 193 L 192 195 
+            L 91.46 99.55 L 20 117.08 L 195.28 200.67 
+            L 20 284.27 L 90.11 301.8 L 192 207 
+            L 194 209 L 98.2 309.89 L 117.08 380 
+            L 200.67 204.72 L 284.27 380 L 301.8 309.89 
+            L 206.07 208.76 L 207 208 L 309.89 301.8 
+            L 380 282.92 L 204.72 200.67 L 380 115.73 
+            L 308.54 99.55 L 208 195 L 207 193 
+            L 301.8 91.46 L 284.27 20 L 199.33 195.28 Z`;
         
-        // Center of the star
-        const centerX = 0;
-        const centerY = 0;
+        // Clean up the path data by removing extra whitespace
+        const commands = svgPath.replace(/\s+/g, ' ').trim().split(' ');
         
-        for (let i = 0; i < petals; i++) {
-            const angle = i * angleStep;
+        // Center and scale the shape
+        const centerX = 200; // SVG center X
+        const centerY = 200; // SVG center Y
+        const scaleFactor = starSize / 200; // Scale to match the desired star size
+        
+        let index = 0;
+        let currentX = 0;
+        let currentY = 0;
+        
+        while (index < commands.length) {
+            const cmd = commands[index];
             
-            // Calculate the tip of the petal
-            const tipX = centerX + Math.cos(angle) * starSize;
-            const tipY = centerY + Math.sin(angle) * starSize;
-            
-            // Calculate inner points for the triangular shape
-            // These points create the "valley" between petals
-            const innerAngle1 = angle + angleStep * 0.5 - Math.PI/16;
-            const innerAngle2 = angle + angleStep * 0.5 + Math.PI/16;
-            
-            const innerRadius = starSize * 0.4; // Controls how deep the valley between petals is
-            
-            const innerX1 = centerX + Math.cos(innerAngle1) * innerRadius;
-            const innerY1 = centerY + Math.sin(innerAngle1) * innerRadius;
-            
-            const innerX2 = centerX + Math.cos(innerAngle2) * innerRadius;
-            const innerY2 = centerY + Math.sin(innerAngle2) * innerRadius;
-            
-            // For the first petal, move to the starting tip
-            if (i === 0) {
-                shape.moveTo(tipX, tipY);
+            if (cmd === 'M' || cmd === 'L' || cmd === 'Z') {
+                if (cmd === 'M') {
+                    // Move to command
+                    const x = (parseFloat(commands[index + 1]) - centerX) * scaleFactor;
+                    const y = (parseFloat(commands[index + 2]) - centerY) * scaleFactor;
+                    shape.moveTo(x, -y); // Negate Y for Three.js coordinate system
+                    currentX = x;
+                    currentY = -y;
+                    index += 3;
+                } else if (cmd === 'L') {
+                    // Line to command
+                    const x = (parseFloat(commands[index + 1]) - centerX) * scaleFactor;
+                    const y = (parseFloat(commands[index + 2]) - centerY) * scaleFactor;
+                    shape.lineTo(x, -y); // Negate Y for Three.js coordinate system
+                    currentX = x;
+                    currentY = -y;
+                    index += 3;
+                } else if (cmd === 'Z') {
+                    // Close path command
+                    shape.closePath();
+                    index += 1;
+                }
+            } else {
+                // Handle numeric values that might be part of the previous command
+                index += 1;
             }
-            
-            // Connect to the inner points to create valleys between petals
-            shape.lineTo(innerX1, innerY1);
-            shape.lineTo(centerX, centerY); // Go to center to create the inward point
-            shape.lineTo(innerX2, innerY2);
-            
-            // Connect to the next petal's tip
-            const nextAngle = ((i + 1) % petals) * angleStep;
-            const nextTipX = centerX + Math.cos(nextAngle) * starSize;
-            const nextTipY = centerY + Math.sin(nextAngle) * starSize;
-            
-            shape.lineTo(nextTipX, nextTipY);
         }
         
-        shape.closePath();
         return shape;
     };
 
@@ -218,7 +225,7 @@ function FlowerStar({progress}) {
         <motion.group ref={mesh} rotation-y={progress} rotation-x={progress}>
             <mesh>
                 <extrudeGeometry 
-                    args={[createFlowerStarShape(), extrudeSettings]} 
+                    args={[createCustomStarShape(), extrudeSettings]} 
                 />
                 <meshStandardMaterial 
                     ref={materialRef}
@@ -240,5 +247,3 @@ function FlowerStar({progress}) {
         </motion.group>
     );
 }
-
-// Replace the AngularStar component with FlowerStar in your CurvedStar component
