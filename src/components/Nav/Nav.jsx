@@ -188,7 +188,7 @@ const Nav = () => {
       <div className="navbar">
         <div className="logo">
           <Link href="/">
-            <img className="logoicon" src="/starshape.svg" />
+            <img className="logoicon" src="/Logos/NETGENIE2.svg" />
           </Link>
         </div>
 
