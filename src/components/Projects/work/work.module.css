@@ -11,14 +11,22 @@
   font-style: normal;
 }
 
+
 .section {
   width: 100%;
   overflow: hidden;
-  background-image: url('/bg.png'); 
+  background-color: black;
   padding: 4rem 0;
-  font-family: 'Criteriacf', sans-serif;
+  background-image: url('/bg.png');
 }
 
+@media screen and (max-width: 991px){
+  .section {
+    padding: 8rem 0;
+
+  }
+  
+}
 @media (min-width: 1024px) {
   .section {
     padding: 6rem 0;
@@ -55,7 +63,6 @@
 .header {
   margin-bottom: 3rem;
   text-align: center;
-  
 }
 
 .categoryLabel {
@@ -153,11 +160,12 @@
   overflow: hidden;
   border: 1px solid rgb(39, 39, 42);
   background-color: rgba(24, 24, 27, 0.5);
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .caseStudyCard:hover {
   background-color: rgb(24, 24, 27);
+  transform: translateY(-5px);
 }
 
 .caseStudyLogo {
@@ -207,6 +215,12 @@
   background-color: rgb(39, 39, 42);
   color: white;
   border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tag:hover {
+  background-color: rgb(249, 115, 22);
 }
 
 .caseStudyDescription {

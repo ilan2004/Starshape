@@ -14,7 +14,11 @@ export default function CaseStudiesPortfolio() {
     activeCategory === "ALL" 
       ? caseStudies 
       : caseStudies.filter((study) => study.categories.includes(activeCategory));
-
+      const handleCaseStudyClick = (link) => {
+        if (link) {
+          window.location.href = link;
+        }
+      };
   return (
     <section className={styles.section}>
       {/* Radial gradient background effect */}
@@ -60,8 +64,12 @@ export default function CaseStudiesPortfolio() {
         {/* Case study cards */}
         <div className={styles.caseStudyGrid}>
           {filteredCaseStudies.map((study) => (
-            <div key={study.id} className={styles.caseStudyCard}>
-              {/* Logo overlay */}
+            <div 
+              key={study.id} 
+              className={styles.caseStudyCard}
+              onClick={() => handleCaseStudyClick(study.link)}
+              style={{ cursor: study.link ? 'pointer' : 'default' }}
+            >
               <div className={styles.caseStudyLogo}>
                 {/* Using regular img tag instead of next/image */}
                 <img

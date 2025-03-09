@@ -17,9 +17,10 @@ export const caseStudies = [
       id: "Dionpower",
       title: "Dionpower ",
       description: "We built custom integration to company ERP system and automated Amazon FBM & FBM orders.",
-      logoSrc: "/placeholder.svg?height=50&width=150",
-      imageSrc: "/placeholder.svg?height=400&width=400",
-      categories: ["AMAZON", "AUTOMATION", "SELLER", "SP-API"],
+      logoSrc: "/projects/Dion/logo.webp",
+      imageSrc: "/projects/Dion/mockd.webp",
+      categories: ["WEBSITE", "CUSTOM DASHBOARD", "ORDER MANGEMENT"],
+      link: "/Works/Dion"
     },
     {
       id: "Wallpaperwale",
@@ -27,25 +28,25 @@ export const caseStudies = [
       description:
         "We created a multi-module SaaS that serves as a one-stop solution for wholesale businesses selling a variety of products on Amazon.",
       logoSrc: "/placeholder.svg?height=50&width=150",
-      imageSrc: "/placeholder.svg?height=400&width=400",
-      categories: ["INTEGRATION", "SELLER", "SP-API", "AMAZON", "AUTOMATION"],
+      imageSrc: "/projects/Wallpaperwale/web.webp",
+      categories: ["WEBSITE", "PRODUCT PHOTOGRAPHY", "SOCIAL MEDIA MARKETING"],
     },
     {
       id: "Pulikkalfuels",
       title: "Pulikkalfuels",
       description: "Seamless integration solution connecting multiple marketplaces to centralized inventory management.",
-      logoSrc: "/placeholder.svg?height=50&width=150",
-      imageSrc: "/placeholder.svg?height=400&width=400",
-      categories: ["INTEGRATION", "MARKETPLACE", "SAAS"],
+      logoSrc: "/projects/pulikkal/logo.webp",
+      imageSrc: "/projects/pulikkal/web.webp",
+      categories: ["WEBSITE"],
     },
     {
       id: "RaphaelMedia",
       title: "RaphaelMedia",
       description:
         "Comprehensive migration tool helping sellers transition from legacy systems to modern eBay infrastructure.",
-      logoSrc: "/placeholder.svg?height=50&width=150",
-      imageSrc: "/placeholder.svg?height=400&width=400",
-      categories: ["EBAY", "MIGRATION", "SELLER"],
+      logoSrc: "/projects/raf/logo.webp",
+      imageSrc: "/projects/raf/web.webp",
+      categories: ["WEBSITE" ],
     },
   ];
   

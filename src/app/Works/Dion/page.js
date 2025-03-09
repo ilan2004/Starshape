@@ -37,7 +37,7 @@ const Dion = () => {
             <div className="project-hero-img">
               <div className="project-hero-img-wrapper">
                 <ParallaxImage
-                  src="/mockd.png"
+                  src="/projects/Dion/mockd.webp"
                   alt="Dion Power dashboard interface"
                   speed={0.2}
                 />
@@ -106,7 +106,7 @@ const Dion = () => {
             <div className="project-info-img-1">
                 <div className="project-info-img-1-wrapper">
                   <ParallaxImage
-                    src="/projects/Dion/invoice.png"
+                    src="/projects/Dion/invoice.webp"
                     alt="Dion Power custom invoice generator"
                     speed={0.2}
                   />
@@ -117,7 +117,7 @@ const Dion = () => {
               <div className="project-info-img-1">
                 <div className="project-info-img-1-wrapper">
                   <ParallaxImage
-                    src="/projects/Dion/admin.png"
+                    src="/projects/Dion/admin.webp"
                     alt="Dion Power admin dashboard"
                     speed={0.2}
                   />
@@ -152,7 +152,7 @@ const Dion = () => {
         <section className="project-preview-img">
           <div className="project-preview-img-wrapper">
             <ParallaxImage
-              src="/projects/Dion/dashboard.png"
+              src="/projects/Dion/dashboard.webp"
               alt="Dion Power dashboard interface showing order details and analytics"
               speed={0.2}
             />
