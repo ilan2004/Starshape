@@ -5,6 +5,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import styles from "./RootLayout.module.css";
 import Nav from "src/components/Nav/Nav";
 import { ViewTransitions } from "next-view-transitions";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ["latin"] });
 
 const modularFont = localFont({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
           <main className={styles.main}>
             {children}
           </main>
+          <SpeedInsights />
       </body>
     </html>
     </ViewTransitions>
