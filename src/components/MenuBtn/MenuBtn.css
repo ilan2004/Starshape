@@ -4,7 +4,7 @@
   justify-content: space-between;
   position: fixed;
   width: 100%;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .menu-logo {
@@ -16,9 +16,14 @@
 .logo{
   position: relative;
   top: 0em;
-
+  left: 2em;
   z-index: 9;
 
+}
+@media screen and (max-width: 991px){
+  .logo{
+    left: 0em;
+  }
 }
 .logoicon{
   height: 80%;
@@ -92,7 +97,7 @@
   height: 60px;
   border-radius: 100%;
   clip-path: circle(10% at 50% 50%);
-  background-color: #f90;
+  background-color: burlywood;
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   z-index: 10;
   overflow: hidden;
