@@ -196,13 +196,13 @@ const Nav = () => {
         <div className="col col-1">
           <div className="links">
             <div className="link">
-              <Link href="/Works" onClick={closeMenu}>Projects</Link>
+              <Link href="/" onClick={closeMenu}>Home</Link>
             </div>
             <div className="link">
-              <Link href="/" onClick={closeMenu}>Expertise</Link>
+              <Link href="/Works" onClick={closeMenu}>Our Works</Link>
             </div>
             <div className="link">
-              <Link href="/" onClick={closeMenu}>Agency</Link>
+              <Link href="/" onClick={closeMenu}>Services</Link>
             </div>
             <div className="link">
               <Link href="/Contact" onClick={closeMenu}>Contact</Link>

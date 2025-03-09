@@ -1,7 +1,8 @@
 'use client';
 import styles from './Style.module.scss'
 import Character from './Character'
-const paragraph = "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+const paragraph = "We build websites that work seamlessly and look great. From custom designs to data-driven dashboards, we help businesses grow.";  
+
 
 export default function TextScroll() {
 
