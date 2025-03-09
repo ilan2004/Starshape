@@ -188,7 +188,7 @@ const Nav = () => {
       <div className="navbar">
         <div className="logo">
           <Link href="/">
-            <img className="logoicon" src="/Logos/official.svg" />
+            <img className="logoicon" src="/Logos/star.svg" />
           </Link>
         </div>
 
@@ -210,21 +210,10 @@ const Nav = () => {
               <Link href="/Contact" onClick={closeMenu}>Contact</Link>
             </div>
           </div>
-          <div className="video-wrapper">
-            <video src="/video.mp4" muted autoPlay loop />
-          </div>
+         
         </div>
         <div className="col col-2">
           <div className="socials">
-            <div className="sub-col">
-              <p>STARSHAPE</p>
-              <p>asasada</p>
-              <p>cscacao</p>
-              <p>bangalure</p>
-              <br />
-              <p>contact@STAR.fr</p>
-              <p>job@SHAPE.fr</p>
-            </div>
             <div className="sub-col">
               <p>Instagram</p>
               <p>LinkedIn</p>
@@ -234,10 +223,10 @@ const Nav = () => {
               <p>01 62 31 82 42</p>
             </div>
           </div>
-
-          <div className="header">
-            <h1>{splitTextIntoSpans("SS")}</h1>
+          <div className="video-wrapper">
+            <video src="/video.mp4" muted autoPlay loop />
           </div>
+          
         </div>
       </div>
     </div>
