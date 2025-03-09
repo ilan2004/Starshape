@@ -1,136 +1,131 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useLayoutEffect } from "react"
 import gsap from "gsap"
 import './loader.css'
 
-export default function Loader({ onComplete }) {
-  const [shouldAnimate, setShouldAnimate] = useState(false)
+// Create a global variable outside of React component lifecycle
+// This will persist across route changes but be reset on page refresh
+let hasVisitedInThisSession = false;
 
-  useEffect(() => {
-    // Check if this is a fresh page load or refresh
-    const isNewPageLoad = !sessionStorage.getItem('pageLoaded')
-    
-    // Set flag in session storage to indicate the page has been loaded
-    if (isNewPageLoad) {
-      sessionStorage.setItem('pageLoaded', 'true')
-      setShouldAnimate(true)
-    } else {
-      // Skip animation and call onComplete immediately if navigating within the app
-      if (onComplete) onComplete()
+export default function Loader({ onComplete }) {
+  // Start with loader enabled by default for initial page load
+  const [shouldAnimate, setShouldAnimate] = useState(true)
+
+  useLayoutEffect(() => {
+    // If we've already visited in this session, skip the animation
+    if (hasVisitedInThisSession) {
+      setShouldAnimate(false)
+      if (onComplete) setTimeout(onComplete, 0)
       return
     }
 
-    // Reset session storage when the window is about to unload (page refresh/close)
-    const handleBeforeUnload = () => {
-      sessionStorage.removeItem('pageLoaded')
+    // Mark that we've visited in this session
+    hasVisitedInThisSession = true
+  }, [onComplete])
+
+  useEffect(() => {
+    // Skip all animations if we shouldn't animate
+    if (!shouldAnimate) {
+      return
     }
-    
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    
-    // Only run animation if this is a fresh page load
-    if (shouldAnimate) {
-      const isMobile = window.innerWidth < 768
-      const windowWidth = window.innerWidth
-      const wrapperWidth = isMobile ? 90 : 180
-      const finalPosition = windowWidth - wrapperWidth
-      const stepDistance = finalPosition / 3 // Reduced steps to 3
-      const tl = gsap.timeline()
 
-      // Set initial styles based on device
-      gsap.set(".digit h1", {
-        fontSize: isMobile ? "180px" : "360px",
-      })
+    const isMobile = window.innerWidth < 768
+    const windowWidth = window.innerWidth
+    const wrapperWidth = isMobile ? 90 : 180
+    const finalPosition = windowWidth - wrapperWidth
+    const stepDistance = finalPosition / 3 // Reduced steps to 3
+    const tl = gsap.timeline()
 
-      gsap.set(".count-wrapper", {
-        width: wrapperWidth,
-        height: isMobile ? 180 : 360,
-      })
+    // Set initial styles based on device
+    gsap.set(".digit h1", {
+      fontSize: isMobile ? "180px" : "360px",
+    })
 
-      gsap.set(".count", {
-        width: isMobile ? 270 : 540, // Reduced width for 3 digits
-        height: isMobile ? 180 : 360,
-        x: isMobile ? -270 : -540, // Adjusted position for 3 digits
-      })
+    gsap.set(".count-wrapper", {
+      width: wrapperWidth,
+      height: isMobile ? 180 : 360,
+    })
 
-      gsap.set(".digit", {
-        width: wrapperWidth,
-        height: isMobile ? 180 : 360,
-      })
+    gsap.set(".count", {
+      width: isMobile ? 270 : 540, // Reduced width for 3 digits
+      height: isMobile ? 180 : 360,
+      x: isMobile ? -270 : -540, // Adjusted position for 3 digits
+    })
 
-      // Faster initial animation
+    gsap.set(".digit", {
+      width: wrapperWidth,
+      height: isMobile ? 180 : 360,
+    })
+
+    // Faster initial animation
+    tl.to(".count", {
+      x: isMobile ? -180 : -360,
+      duration: 0.5, // Reduced from 0.85
+      delay: 0.3, // Reduced from 0.5
+      ease: "power4.inOut",
+    })
+
+    // Animation for each step (3 instead of 6)
+    for (let i = 1; i <= 3; i++) {
+      const xPosition = (isMobile ? -180 : -360) + i * wrapperWidth
       tl.to(".count", {
-        x: isMobile ? -180 : -360,
+        x: xPosition,
         duration: 0.5, // Reduced from 0.85
-        delay: 0.3, // Reduced from 0.5
         ease: "power4.inOut",
-      })
-
-      // Animation for each step (3 instead of 6)
-      for (let i = 1; i <= 3; i++) {
-        const xPosition = (isMobile ? -180 : -360) + i * wrapperWidth
-        tl.to(".count", {
-          x: xPosition,
-          duration: 0.5, // Reduced from 0.85
-          ease: "power4.inOut",
-          onStart: () => {
-            gsap.to(".count-wrapper", {
-              x: stepDistance * i,
-              duration: 0.5, // Reduced from 0.85
-              ease: "power4.inOut",
-            })
-          },
-        })
-      }
-
-      gsap.set(".revealer svg", { scale: 0 })
-
-      // Faster reveal animations
-      const delays = [3, 3.3, 3.6] // Reduced from [6, 6.5, 7]
-      const maxScale = isMobile ? 25 : 45
-
-      document.querySelectorAll(".revealer svg").forEach((el, i) => {
-        gsap.to(el, {
-          scale: maxScale,
-          duration: 1, // Reduced from 1.5
-          ease: "power4.inOut",
-          delay: delays[i],
-          onComplete: () => {
-            if (i === delays.length - 1) {
-              if (onComplete) onComplete()
-            }
-          },
-        })
-      })
-
-      gsap.to(".header h1", {
         onStart: () => {
-          gsap.to(".toggle-btn", {
-            scale: 1,
-            duration: 0.7, // Reduced from 1
+          gsap.to(".count-wrapper", {
+            x: stepDistance * i,
+            duration: 0.5, // Reduced from 0.85
             ease: "power4.inOut",
           })
-          gsap.to(".line p", {
-            y: 0,
-            duration: 0.7, // Reduced from 1
-            stagger: 0.07, // Reduced from 0.1
-            ease: "power3.out",
-          })
         },
-        rotateY: 0,
-        opacity: 1,
-        duration: 1.2, // Reduced from 2
-        ease: "power3.out",
-        delay: 4.2, // Reduced from 8
       })
     }
 
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-    }
+    gsap.set(".revealer svg", { scale: 0 })
+
+    // Faster reveal animations
+    const delays = [3, 3.3, 3.6] // Reduced from [6, 6.5, 7]
+    const maxScale = isMobile ? 25 : 45
+
+    document.querySelectorAll(".revealer svg").forEach((el, i) => {
+      gsap.to(el, {
+        scale: maxScale,
+        duration: 1, // Reduced from 1.5
+        ease: "power4.inOut",
+        delay: delays[i],
+        onComplete: () => {
+          if (i === delays.length - 1) {
+            if (onComplete) onComplete()
+          }
+        },
+      })
+    })
+
+    gsap.to(".header h1", {
+      onStart: () => {
+        gsap.to(".toggle-btn", {
+          scale: 1,
+          duration: 0.7, // Reduced from 1
+          ease: "power4.inOut",
+        })
+        gsap.to(".line p", {
+          y: 0,
+          duration: 0.7, // Reduced from 1
+          stagger: 0.07, // Reduced from 0.1
+          ease: "power3.out",
+        })
+      },
+      rotateY: 0,
+      opacity: 1,
+      duration: 1.2, // Reduced from 2
+      ease: "power3.out",
+      delay: 4.2, // Reduced from 8
+    })
   }, [onComplete, shouldAnimate])
 
-  // If not animating, don't render the loader component
+  // If we're not animating, don't render the loader
   if (!shouldAnimate) {
     return null
   }
