@@ -17,7 +17,6 @@ const Web = () => {
       <Gap/>
       <Details/>
       <Approach/>
-      <Project/>
       <Process/>
       <Work/>
       <Footer/>

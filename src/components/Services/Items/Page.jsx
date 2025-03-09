@@ -38,7 +38,7 @@ export const projects = [
     Icon: "/4.svg",
     description:
       "Unlock actionable insights with advanced Power BI dashboards, real-time analytics, and custom business intelligence solutions.",
-    link: "/DataAnalytics",
+    link: "/Data",
     to: "see more",
   },
   {
@@ -46,7 +46,7 @@ export const projects = [
     Icon: "/1.svg",
     description:
       "Unlock actionable insights with advanced Power BI dashboards, real-time analytics, and custom business intelligence solutions.",
-    link: "/DataAnalytics",
+    link: "/Aiads",
     to: "see more",
   },
 ];

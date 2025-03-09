@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       <head>
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <link rel="icon" href="/Logos/logo.svg" type="image/svg+xml" />
+        <link rel="icon" href="/Logos/star.svg" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} ${styles.body}`}>
 

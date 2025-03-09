@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'Criteriacf';
+    src: url('../../../public/CriteriaCF-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Ailerons';
+    src: url('../../../public/Ailerons.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+.hero {
+    background-image: url('/work.webp'); /* Path relative to the public folder */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    color: white; /* Example text color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: Criteriacf, sans-serif;
+    font-size: 128px;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 32px;
+    text-align: center;
+    background: linear-gradient(to right, #f90 0.03%, #f24822 97%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.description {
+    margin-bottom: 0;
+    font-size: 24px;
+    line-height: 1.5;
+    grid-column-gap: 80px;
+    grid-row-gap: 80px;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+}
+.button {
+    background-color: #f90;
+    color: black;
+    border-radius: 8px;
+    font-family: 'Criteriacf', sans-serif;
+    padding: 24px 40px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: all .15s ease-out;
+    margin: 0; /* Remove auto margin */
+  }
+.box{
+    max-width: 904px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.orange{
+    letter-spacing: 3.84px;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: Criteriacf, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 2;
+    background: linear-gradient(to right, #f90 0.03%, #f24822 97%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.service{
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+}
+.button:hover {
+    background-color: rgb(255, 255, 255);
+    color: #f90;
+  }
+  @media screen and (max-width: 767px) {
+    .title {
+        font-size: 64px;
+    }
+    .button{
+        padding: 20px 32px;
+        font-size: 16px;
+    }
+}
