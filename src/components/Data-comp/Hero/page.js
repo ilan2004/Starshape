@@ -1,15 +1,19 @@
-import React from 'react'
+import React from 'react';
 import styles from './page.module.css';
+
 export const Datahero = () => {
   return (
     <div className={styles.hero}>
-        <div className={styles.box}>
+      <div className={styles.box}>
         <div className={styles.service}>
-            <div className={styles.orange}>SERVICES</div>
+          <div className={styles.orange}>SERVICES</div>
         </div>
         <div className={styles.title}>Data Analysis</div>
-        <div className={styles.description}>In the digital age, a unique online presence is vital. Custom website development creates a site tailored to your brand and business goals. Whether you need an informational site or a complex web application, we deliver a visually appealing and high-performing website. Our team works closely with you to ensure your website drives engagement and growth for your business.</div>
+        <div className={styles.description}>
+          Unlock the power of data with our tailored analytics solutions. We transform raw data into meaningful insights, helping businesses optimize performance and drive strategic decisions. Whether it's predictive analytics, reporting, or real-time monitoring, our expertise ensures data-driven success.
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
+

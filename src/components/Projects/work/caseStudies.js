@@ -27,7 +27,7 @@ export const caseStudies = [
       title: "Wallpaperwale",
       description:
         "We created a multi-module SaaS that serves as a one-stop solution for wholesale businesses selling a variety of products on Amazon.",
-      logoSrc: "/placeholder.svg?height=50&width=150",
+      logoSrc: "/projects/Wallpaperwale/logo.webp",
       imageSrc: "/projects/Wallpaperwale/web.webp",
       categories: ["WEBSITE", "PRODUCT PHOTOGRAPHY", "SOCIAL MEDIA MARKETING"],
     },
