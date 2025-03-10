@@ -201,7 +201,7 @@ const Nav = () => {
               <Link href="/" onClick={closeMenu}>Home</Link>
             </div>
             <div className="link">
-              <Link href="/Works" onClick={closeMenu}>Our Works</Link>
+              <Link href="/Works" onClick={closeMenu}>Portfolio</Link>
             </div>
             <div className="link">
               <Link href="/" onClick={closeMenu}>Services</Link>
