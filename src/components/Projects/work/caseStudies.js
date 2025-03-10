@@ -44,8 +44,8 @@ export const caseStudies = [
       title: "RaphaelMedia",
       description:
         "Comprehensive migration tool helping sellers transition from legacy systems to modern eBay infrastructure.",
-      logoSrc: "/projects/raf/logo.webp",
-      imageSrc: "/projects/raf/web.webp",
+      logoSrc: "/projects/Raf/logo.webp",
+      imageSrc: "/projects/Raf/web.webp",
       categories: ["WEBSITE" ],
     },
   ];
