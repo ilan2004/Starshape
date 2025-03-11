@@ -1,40 +1,38 @@
 "use client"
-import { useEffect, useState } from "react"; // Removed useLayoutEffect
+import { useEffect, useState, useLayoutEffect } from "react";
 import gsap from "gsap";
 import './loader.css';
 
 let hasVisitedInThisSession = false;
 
 export default function Loader({ onComplete, isMobile: propIsMobile }) {
-  const [hasAnimatedOnce, setHasAnimatedOnce] = useState(false); // Track if it’s animated in this session
+  const [shouldAnimate, setShouldAnimate] = useState(!hasVisitedInThisSession);
   const isMobile = propIsMobile !== undefined ? propIsMobile : (typeof window !== "undefined" && window.innerWidth < 768);
   const svgSize = isMobile ? 200 : 400;
 
-  // Animate on first load regardless of hasVisitedInThisSession, then respect it
-  const shouldAnimate = !hasAnimatedOnce || !hasVisitedInThisSession;
-
-  useEffect(() => {
-    if (!shouldAnimate) {
-      if (onComplete) setTimeout(onComplete, 0); // Skip and call onComplete immediately
+  useLayoutEffect(() => {
+    if (hasVisitedInThisSession) {
+      setShouldAnimate(false);
+      if (onComplete) setTimeout(onComplete, 0);
       return;
     }
+    hasVisitedInThisSession = true;
+  }, [onComplete]);
 
-    console.log("Loader: Starting animation", { isMobile, svgSize, hasVisitedInThisSession });
+  useEffect(() => {
+    if (!shouldAnimate) return;
+
+    console.log("Loader: Starting animation", { isMobile, svgSize });
 
     const windowWidth = window.innerWidth;
     const wrapperWidth = isMobile ? 90 : 180;
     const finalPosition = windowWidth - wrapperWidth;
     const stepDistance = finalPosition / 3;
-    const tl = gsap.timeline({
-      onComplete: () => {
-        console.log("All animations done, setting hasVisitedInThisSession");
-        hasVisitedInThisSession = true; // Set after first animation
-        setHasAnimatedOnce(true); // Mark as animated
-        if (onComplete) onComplete();
-      },
-    });
+    const tl = gsap.timeline();
 
-    // Initial setup
+    // Log initial setup
+    console.log("Window width:", windowWidth, "Wrapper width:", wrapperWidth);
+
     gsap.set(".digit h1", { fontSize: isMobile ? "180px" : "360px" });
     gsap.set(".count-wrapper", {
       width: `${wrapperWidth}px`,
@@ -51,7 +49,8 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
       height: isMobile ? "180px" : "360px",
     });
 
-    console.log("Count elements found:", document.querySelectorAll(".count").length);
+    const countElements = document.querySelectorAll(".count");
+    console.log("Count elements found:", countElements.length);
 
     tl.to(".count", {
       x: isMobile ? "-180px" : "-360px",
@@ -79,6 +78,7 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
     }
 
     gsap.set(".revealer svg", { scale: 0 });
+    const delays = [3, 3.3, 3.6];
     const maxScale = isMobile ? 25 : 45;
 
     const revealers = document.querySelectorAll(".revealer svg");
@@ -86,22 +86,32 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
 
     if (revealers.length > 0) {
       revealers.forEach((el, i) => {
-        tl.to(el, {
+        gsap.to(el, {
           scale: maxScale,
           duration: 1,
           ease: "power4.inOut",
+          delay: delays[i],
           onStart: () => console.log(`Revealer ${i + 1} animation started`),
-          onComplete: () => console.log(`Revealer ${i + 1} animation complete`),
-        }, `+=${i * 0.3}`); // Stagger SVGs by 0.3s after numbers
+          onComplete: () => {
+            console.log(`Revealer ${i + 1} animation complete`);
+            if (i === delays.length - 1 && onComplete) {
+              console.log("All revealer animations done, calling onComplete");
+              onComplete();
+            }
+          },
+        });
       });
     } else {
-      console.warn("No .revealer svg elements found, adding fallback");
-      tl.to({}, { duration: 1 }); // Placeholder to ensure completion
+      console.warn("No .revealer svg elements found, using fallback");
+      setTimeout(() => {
+        console.log("Fallback timeout triggered");
+        if (onComplete) onComplete();
+      }, 5000); // 5-second fallback
     }
 
     const header = document.querySelector(".header h1");
     if (header) {
-      tl.to(header, {
+      gsap.to(header, {
         onStart: () => {
           gsap.to(".toggle-btn", { scale: 1, duration: 0.7, ease: "power4.inOut" });
           gsap.to(".line p", { y: 0, duration: 0.7, stagger: 0.07, ease: "power3.out" });
@@ -110,6 +120,7 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
         opacity: 1,
         duration: 1.2,
         ease: "power3.out",
+        delay: 4.2,
       });
     } else {
       console.log("No .header h1 found");
