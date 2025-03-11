@@ -1,16 +1,15 @@
 "use client"
-
-import { useEffect, useState, useLayoutEffect } from "react"
-import gsap from "gsap"
-import './loader.css'
+import { useEffect, useState, useLayoutEffect } from "react";
+import gsap from "gsap";
+import './loader.css';
 
 // Global variable to persist across route changes but reset on page refresh
 let hasVisitedInThisSession = false;
 
-export default function Loader({ onComplete }) {
+export default function Loader({ onComplete, isMobile: propIsMobile }) {
   const [shouldAnimate, setShouldAnimate] = useState(!hasVisitedInThisSession);
-  // Define isMobile and svgSize at the component level
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  // Use propIsMobile if provided, otherwise fall back to window check
+  const isMobile = propIsMobile !== undefined ? propIsMobile : (typeof window !== "undefined" && window.innerWidth < 768);
   const svgSize = isMobile ? 200 : 400;
 
   useLayoutEffect(() => {
@@ -31,21 +30,20 @@ export default function Loader({ onComplete }) {
     const stepDistance = finalPosition / 3;
     const tl = gsap.timeline();
 
-    // Set initial styles with explicit pixel units
     gsap.set(".digit h1", { fontSize: isMobile ? "180px" : "360px" });
     gsap.set(".count-wrapper", {
       width: `${wrapperWidth}px`,
       height: isMobile ? "180px" : "360px",
-      overflow: "hidden"
+      overflow: "hidden",
     });
     gsap.set(".count", {
       width: isMobile ? "270px" : "540px",
       height: isMobile ? "180px" : "360px",
-      x: isMobile ? "-270px" : "-540px"
+      x: isMobile ? "-270px" : "-540px",
     });
     gsap.set(".digit", {
       width: `${wrapperWidth}px`,
-      height: isMobile ? "180px" : "360px"
+      height: isMobile ? "180px" : "360px",
     });
 
     tl.to(".count", {
@@ -90,7 +88,7 @@ export default function Loader({ onComplete }) {
       });
     } else {
       console.warn("No .revealer svg elements found");
-      if (onComplete) setTimeout(onComplete, 0);
+      setTimeout(() => onComplete && onComplete(), 1000); // Fallback timeout
     }
 
     const header = document.querySelector(".header h1");
@@ -107,7 +105,7 @@ export default function Loader({ onComplete }) {
         delay: 4.2,
       });
     }
-  }, [onComplete, shouldAnimate, isMobile]); // Add isMobile to dependencies
+  }, [onComplete, shouldAnimate, isMobile]);
 
   if (!shouldAnimate) return null;
 
