@@ -3,12 +3,10 @@ import { useEffect, useState, useLayoutEffect } from "react";
 import gsap from "gsap";
 import './loader.css';
 
-// Global variable to persist across route changes but reset on page refresh
 let hasVisitedInThisSession = false;
 
 export default function Loader({ onComplete, isMobile: propIsMobile }) {
   const [shouldAnimate, setShouldAnimate] = useState(!hasVisitedInThisSession);
-  // Use propIsMobile if provided, otherwise fall back to window check
   const isMobile = propIsMobile !== undefined ? propIsMobile : (typeof window !== "undefined" && window.innerWidth < 768);
   const svgSize = isMobile ? 200 : 400;
 
@@ -24,11 +22,16 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
   useEffect(() => {
     if (!shouldAnimate) return;
 
+    console.log("Loader: Starting animation", { isMobile, svgSize });
+
     const windowWidth = window.innerWidth;
     const wrapperWidth = isMobile ? 90 : 180;
     const finalPosition = windowWidth - wrapperWidth;
     const stepDistance = finalPosition / 3;
     const tl = gsap.timeline();
+
+    // Log initial setup
+    console.log("Window width:", windowWidth, "Wrapper width:", wrapperWidth);
 
     gsap.set(".digit h1", { fontSize: isMobile ? "180px" : "360px" });
     gsap.set(".count-wrapper", {
@@ -46,11 +49,15 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
       height: isMobile ? "180px" : "360px",
     });
 
+    const countElements = document.querySelectorAll(".count");
+    console.log("Count elements found:", countElements.length);
+
     tl.to(".count", {
       x: isMobile ? "-180px" : "-360px",
       duration: 0.5,
       delay: 0.3,
       ease: "power4.inOut",
+      onComplete: () => console.log("Initial count animation complete"),
     });
 
     for (let i = 1; i <= 3; i++) {
@@ -66,6 +73,7 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
             ease: "power4.inOut",
           });
         },
+        onComplete: () => console.log(`Step ${i} complete`),
       });
     }
 
@@ -74,6 +82,8 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
     const maxScale = isMobile ? 25 : 45;
 
     const revealers = document.querySelectorAll(".revealer svg");
+    console.log("Revealer SVGs found:", revealers.length);
+
     if (revealers.length > 0) {
       revealers.forEach((el, i) => {
         gsap.to(el, {
@@ -81,14 +91,22 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
           duration: 1,
           ease: "power4.inOut",
           delay: delays[i],
+          onStart: () => console.log(`Revealer ${i + 1} animation started`),
           onComplete: () => {
-            if (i === delays.length - 1 && onComplete) onComplete();
+            console.log(`Revealer ${i + 1} animation complete`);
+            if (i === delays.length - 1 && onComplete) {
+              console.log("All revealer animations done, calling onComplete");
+              onComplete();
+            }
           },
         });
       });
     } else {
-      console.warn("No .revealer svg elements found");
-      setTimeout(() => onComplete && onComplete(), 1000); // Fallback timeout
+      console.warn("No .revealer svg elements found, using fallback");
+      setTimeout(() => {
+        console.log("Fallback timeout triggered");
+        if (onComplete) onComplete();
+      }, 5000); // 5-second fallback
     }
 
     const header = document.querySelector(".header h1");
@@ -104,6 +122,8 @@ export default function Loader({ onComplete, isMobile: propIsMobile }) {
         ease: "power3.out",
         delay: 4.2,
       });
+    } else {
+      console.log("No .header h1 found");
     }
   }, [onComplete, shouldAnimate, isMobile]);
 
