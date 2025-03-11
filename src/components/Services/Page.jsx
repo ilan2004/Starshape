@@ -8,7 +8,7 @@ export const Services = () => {
         <div className={styles.h1}>
         <h1 >Our Services</h1>
         </div>
-        <div className="hover">
+        <div id="hover">
             <CardHover/>
         </div>
     </div>

@@ -7,12 +7,13 @@ import {
   useLayoutEffect,
 } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; // Fix import
 import "./Nav.css";
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import MenuBtn from "../MenuBtn/MenuBtn";
 import Image from 'next/image';
+
 
 
 const Nav = () => {
@@ -21,6 +22,7 @@ const Nav = () => {
   const menuRef = useRef(null);
   const isInitializedRef = useRef(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   useLayoutEffect(() => {
     gsap.registerPlugin(CustomEase);
@@ -171,16 +173,27 @@ const Nav = () => {
     }
   }, [isAnimating, isOpen]);
 
-  const splitTextIntoSpans = (text) => {
-    return text
-      .split("")
-      .map((char, index) =>
-        char === " " ? (
-          <span key={index}>&nbsp;&nbsp;</span>
-        ) : (
-          <span key={index}>{char}</span>
-        )
-      );
+  const handleClick = (e) => {
+    e.preventDefault();
+  
+    if (pathname === "/") {
+      // Scroll to the services section
+      document.getElementById("hover")?.scrollIntoView({ behavior: "smooth" });
+      
+      // Close menu if open
+      closeMenu();
+    } else {
+      // Navigate to home, then scroll after page loads
+      router.push("/");
+      setTimeout(() => {
+        document.getElementById("hover")?.scrollIntoView({ behavior: "smooth" });
+        
+        // Close menu after navigating
+        closeMenu();
+      }, 500);
+    }
+
+      
   };
 
   return (
@@ -204,7 +217,7 @@ const Nav = () => {
               <Link href="/Works" onClick={closeMenu}>Portfolio</Link>
             </div>
             <div className="link">
-              <Link href="/" onClick={closeMenu}>Services</Link>
+              <a onClick={handleClick} style={{ cursor: "pointer" }}>Services</a>
             </div>
             <div className="link">
               <Link href="/Contact" onClick={closeMenu}>Contact</Link>

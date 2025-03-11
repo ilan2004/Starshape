@@ -10,7 +10,7 @@ export const Poster = () => {
             amazing project
             </div>
              <button className={styles.button}>
-            Our Services
+            Contact us
             </button> 
         </div>
     </div>
