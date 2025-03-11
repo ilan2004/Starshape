@@ -4,24 +4,28 @@ import { useEffect, useState, useLayoutEffect } from "react"
 import gsap from "gsap"
 import './loader.css'
 
-// Create a global variable outside of React component lifecycle
-// This will persist across route changes but be reset on page refresh
-let hasVisitedInThisSession = false;
-
 export default function Loader({ onComplete }) {
   // Start with loader enabled by default for initial page load
   const [shouldAnimate, setShouldAnimate] = useState(true)
 
   useLayoutEffect(() => {
-    // If we've already visited in this session, skip the animation
-    if (hasVisitedInThisSession) {
-      setShouldAnimate(false)
-      if (onComplete) setTimeout(onComplete, 0)
-      return
+    // We need a way to detect if this is a page reload vs route navigation
+    // For this, we'll use sessionStorage which clears on page reload but persists during route navigation
+    const pageLoadTimestamp = sessionStorage.getItem('pageLoadTimestamp');
+    const routeChangeTimestamp = localStorage.getItem('routeChangeTimestamp');
+    const currentTime = new Date().getTime();
+    
+    // If there's no pageLoadTimestamp, this is either first visit or a page reload
+    if (!pageLoadTimestamp) {
+      // This is a fresh page load (either first visit or reload)
+      sessionStorage.setItem('pageLoadTimestamp', currentTime.toString());
+      setShouldAnimate(true);
+    } else {
+      // This is route navigation, not a page reload
+      localStorage.setItem('routeChangeTimestamp', currentTime.toString());
+      setShouldAnimate(false);
+      if (onComplete) setTimeout(onComplete, 0);
     }
-
-    // Mark that we've visited in this session
-    hasVisitedInThisSession = true
   }, [onComplete])
 
   useEffect(() => {
