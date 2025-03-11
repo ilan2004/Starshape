@@ -1,7 +1,8 @@
 'use client'
 import React from 'react';
 import styles from './page.module.css';
-import { InstagramLogoIcon, LinkedInLogoIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
+import { InstagramLogoIcon, LinkedInLogoIcon } from '@radix-ui/react-icons';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export const Footer = () => {
   return (
@@ -13,10 +14,14 @@ export const Footer = () => {
           </div>
           <div className={styles.social}>
             <div className={styles.wrapper}>
-              <GitHubLogoIcon className={styles.icon} />
+              <a href="https://wa.me/yourwhatsappnumber" target="_blank" rel="noopener noreferrer">
+                <FaWhatsapp className={styles.icon} />
+              </a>
             </div>
             <div className={styles.wrapper}>
-              <InstagramLogoIcon className={styles.icon} />
+              <a href="https://www.instagram.com/thestarshape/" target="_blank" rel="noopener noreferrer">
+                <InstagramLogoIcon className={styles.icon} />
+              </a>
             </div>
             <div className={styles.wrapper}>
               <LinkedInLogoIcon className={styles.icon} />
@@ -26,7 +31,7 @@ export const Footer = () => {
         <div className={styles.content}>
           <div className={styles.row1}>
             <p className={styles.para}>
-              We are a team of passionate <strong>CS students</strong> dedicated to building innovative digital solutions.  
+              Crafting powerful digital experiences with cutting-edge solutions.  
               <br /><br />
               📧 Email:  
               <br />

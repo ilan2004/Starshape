@@ -224,7 +224,7 @@ const Nav = () => {
             </div>
           </div>
           <div className="video-wrapper">
-            <video src="/video.mp4" muted autoPlay loop />
+            <video src="/videos/compressed1.mp4" muted autoPlay loop />
           </div>
           
         </div>
