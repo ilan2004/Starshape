@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { logPageView, logEvent } from "utils/analytics";
-import { database } from "utils/firebase"; // Import Firebase DB
+import { database } from "utils/firebaseConfig";
 import { ref, push } from "firebase/database";
 
 export default function ClientWrapper() {
