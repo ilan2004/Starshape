@@ -1,3 +1,4 @@
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
@@ -6,6 +7,7 @@ import styles from "./RootLayout.module.css";
 import Nav from "src/components/Nav/Nav";
 import { ViewTransitions } from "next-view-transitions";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import ClientWrapper from "utils/Clientwrapper/ClientWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 const modularFont = localFont({
@@ -30,11 +32,12 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/Logos/star.svg" type="image/svg+xml" />
       </head>
       <body className={`${inter.className} ${styles.body}`}>
-
+      <ClientWrapper />
           <Nav/>
           <main className={styles.main}>
             {children}
           </main>
+
           <SpeedInsights />
       </body>
     </html>

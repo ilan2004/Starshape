@@ -13,6 +13,8 @@ import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 import MenuBtn from "../MenuBtn/MenuBtn";
 import Image from 'next/image';
+import { logEvent } from "firebase/analytics";
+import { analytics } from "utils/firebaseConfig";
 
 
 
@@ -164,8 +166,10 @@ const Nav = () => {
   const toggleMenu = useCallback(() => {
     if (!isAnimating) {
       setIsOpen((prevIsOpen) => !prevIsOpen);
+      logEvent(analytics, "menu_button_click"); // Log event only when menu actually toggles
     }
-  }, [isAnimating]);
+  }, [isAnimating]); 
+  
 
   const closeMenu = useCallback(() => {
     if (!isAnimating && isOpen) {
