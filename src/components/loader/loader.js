@@ -51,8 +51,9 @@ export default function Loader({ onComplete }) {
     const finalPosition = screenWidth - wrapperWidth
     const stepDistance = finalPosition / 3
     
-    // Scale SVGs appropriately for mobile
-    const svgScale = isMobile ? Math.max(15, screenWidth / 16) : 45
+    // Fixed scale values for SVGs to maintain sharpness
+    // Using integer scale values helps preserve crisp edges
+    const svgScale = isMobile ? (isSmallMobile ? 14 : 18) : 45
     
     // Adjust timing for mobile (faster on mobile)
     const stepDuration = isMobile ? 0.4 : 0.5
@@ -82,11 +83,25 @@ export default function Loader({ onComplete }) {
       height: wrapperHeight,
     })
 
-    // Optimize performance by using transform instead of x/y where possible
+    // Set SVG rendering to optimize clarity
     gsap.set(".revealer svg", { 
       scale: 0,
       transformOrigin: "center center",
       willChange: "transform"
+    })
+    
+    // Ensure SVGs render crisply by disabling antialiasing
+    document.querySelectorAll(".revealer svg").forEach(svg => {
+      svg.setAttribute('shape-rendering', 'crispEdges')
+      
+      // Set viewBox to match actual dimensions for better scaling
+      const width = parseInt(svg.getAttribute('width'))
+      const height = parseInt(svg.getAttribute('height'))
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
+      
+      // Ensure pixel-perfect alignment
+      svg.style.width = `${width}px`
+      svg.style.height = `${height}px`
     })
 
     // Faster initial animation
@@ -123,11 +138,16 @@ export default function Loader({ onComplete }) {
 
     // Use staggered animations for better performance
     document.querySelectorAll(".revealer svg").forEach((el, i) => {
+      // Apply hardware acceleration for smoother scaling
+      el.style.backfaceVisibility = 'hidden'
+      el.style.perspective = '1000'
+      
       gsap.to(el, {
         scale: svgScale,
         duration: isMobile ? 0.8 : 1,
         ease: "power4.inOut",
         delay: delays[i],
+        force3D: true, // Force 3D transforms for hardware acceleration
         onComplete: () => {
           if (i === delays.length - 1) {
             // Animation complete - mark as shown
@@ -197,27 +217,27 @@ export default function Loader({ onComplete }) {
       </div>
 
       <div className="revealer revealer-1">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
           <path
-            d="M 115.73 20 L 98.2 91.46 L 195 193 L 192 195 L 91.46 99.55 L 20 117.08 L 195.28 200.67 L 20 284.27 L 90.11 301.8 L 192 207 L 194 209 L 98.2 309.89 L 117.08 380 L 200.67 204.72 L 284.27 380 L 301.8 309.89 L 206.07 208.76 L 207 208 L 309.89 301.8 L 380 282.92 L 204.72 200.67 L 380 115.73 L 308.54 99.55 L 208 195 L 207 193 L 301.8 91.46 L 284.27 20 L 199.33 195.28 Z"
+            d="M116 20L98 91L195 193L192 195L91 100L20 117L195 201L20 284L90 302L192 207L194 209L98 310L117 380L201 205L284 380L302 310L206 209L207 208L310 302L380 283L205 201L380 116L309 100L208 195L207 193L302 91L284 20L199 195Z"
             fill="white"
           />
         </svg>
       </div>
 
       <div className="revealer revealer-2">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
           <path
-            d="M 115.73 20 L 98.2 91.46 L 195 193 L 192 195 L 91.46 99.55 L 20 117.08 L 195.28 200.67 L 20 284.27 L 90.11 301.8 L 192 207 L 194 209 L 98.2 309.89 L 117.08 380 L 200.67 204.72 L 284.27 380 L 301.8 309.89 L 206.07 208.76 L 207 208 L 309.89 301.8 L 380 282.92 L 204.72 200.67 L 380 115.73 L 308.54 99.55 L 208 195 L 207 193 L 301.8 91.46 L 284.27 20 L 199.33 195.28 Z"
+            d="M116 20L98 91L195 193L192 195L91 100L20 117L195 201L20 284L90 302L192 207L194 209L98 310L117 380L201 205L284 380L302 310L206 209L207 208L310 302L380 283L205 201L380 116L309 100L208 195L207 193L302 91L284 20L199 195Z"
             fill="#f24822"
           />
         </svg>
       </div>
 
       <div className="revealer revealer-3">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
           <path
-            d="M 115.73 20 L 98.2 91.46 L 195 193 L 192 195 L 91.46 99.55 L 20 117.08 L 195.28 200.67 L 20 284.27 L 90.11 301.8 L 192 207 L 194 209 L 98.2 309.89 L 117.08 380 L 200.67 204.72 L 284.27 380 L 301.8 309.89 L 206.07 208.76 L 207 208 L 309.89 301.8 L 380 282.92 L 204.72 200.67 L 380 115.73 L 308.54 99.55 L 208 195 L 207 193 L 301.8 91.46 L 284.27 20 L 199.33 195.28 Z"
+            d="M116 20L98 91L195 193L192 195L91 100L20 117L195 201L20 284L90 302L192 207L194 209L98 310L117 380L201 205L284 380L302 310L206 209L207 208L310 302L380 283L205 201L380 116L309 100L208 195L207 193L302 91L284 20L199 195Z"
             fill="black"
           />
         </svg>
