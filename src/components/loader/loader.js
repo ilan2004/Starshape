@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import gsap from "gsap"
 import './loader.css'
 
 export default function Loader({ onComplete }) {
   // Track if the loader has already been shown in this session
   const [loaderShown, setLoaderShown] = useState(false)
+  const loaderRef = useRef(null)
   
   useEffect(() => {
     // On component mount, check if loader has been shown before
@@ -22,72 +23,109 @@ export default function Loader({ onComplete }) {
       setLoaderShown(true)
       if (onComplete) onComplete()
     }
+    
+    // Add resize handler for better responsiveness
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [onComplete])
   
+  const handleResize = () => {
+    if (!loaderShown && loaderRef.current) {
+      // Reset and re-run animation on resize
+      gsap.killTweensOf(".count, .count-wrapper, .revealer svg, .header h1, .toggle-btn, .line p")
+      runAnimation()
+    }
+  }
+  
   const runAnimation = () => {
-    const isMobile = window.innerWidth < 768
-    const windowWidth = window.innerWidth
-    const wrapperWidth = isMobile ? 90 : 180
-    const finalPosition = windowWidth - wrapperWidth
+    // Improved mobile detection with breakpoints
+    const screenWidth = window.innerWidth
+    const isMobile = screenWidth < 768
+    const isSmallMobile = screenWidth < 375
+    
+    // Dynamic sizing based on screen width
+    const baseSize = Math.min(screenWidth * 0.25, isMobile ? 180 : 360)
+    const wrapperWidth = baseSize * 0.5
+    const wrapperHeight = baseSize
+    const countWidth = baseSize * 1.5
+    const finalPosition = screenWidth - wrapperWidth
     const stepDistance = finalPosition / 3
+    
+    // Scale SVGs appropriately for mobile
+    const svgScale = isMobile ? Math.max(15, screenWidth / 16) : 45
+    
+    // Adjust timing for mobile (faster on mobile)
+    const stepDuration = isMobile ? 0.4 : 0.5
+    const revealDelay = isMobile ? 0.2 : 0.3
+    const baseDelay = isMobile ? 2.5 : 3
+    
     const tl = gsap.timeline()
 
-    // Set initial styles based on device
+    // Set initial styles dynamically based on screen size
     gsap.set(".digit h1", {
-      fontSize: isMobile ? "180px" : "360px",
+      fontSize: `${baseSize}px`,
     })
 
     gsap.set(".count-wrapper", {
       width: wrapperWidth,
-      height: isMobile ? 180 : 360,
+      height: wrapperHeight,
     })
 
     gsap.set(".count", {
-      width: isMobile ? 270 : 540,
-      height: isMobile ? 180 : 360,
-      x: isMobile ? -270 : -540,
+      width: countWidth,
+      height: wrapperHeight,
+      x: -countWidth,
     })
 
     gsap.set(".digit", {
       width: wrapperWidth,
-      height: isMobile ? 180 : 360,
+      height: wrapperHeight,
+    })
+
+    // Optimize performance by using transform instead of x/y where possible
+    gsap.set(".revealer svg", { 
+      scale: 0,
+      transformOrigin: "center center",
+      willChange: "transform"
     })
 
     // Faster initial animation
     tl.to(".count", {
-      x: isMobile ? -180 : -360,
-      duration: 0.5,
+      x: -baseSize,
+      duration: stepDuration,
       delay: 0.3,
       ease: "power4.inOut",
     })
 
     // Animation for each step
     for (let i = 1; i <= 3; i++) {
-      const xPosition = (isMobile ? -180 : -360) + i * wrapperWidth
+      const xPosition = -baseSize + i * wrapperWidth
       tl.to(".count", {
         x: xPosition,
-        duration: 0.5,
+        duration: stepDuration,
         ease: "power4.inOut",
         onStart: () => {
           gsap.to(".count-wrapper", {
             x: stepDistance * i,
-            duration: 0.5,
+            duration: stepDuration,
             ease: "power4.inOut",
           })
         },
       })
     }
 
-    gsap.set(".revealer svg", { scale: 0 })
+    // Faster reveal animations with staggered timing
+    const delays = [
+      baseDelay, 
+      baseDelay + revealDelay, 
+      baseDelay + (revealDelay * 2)
+    ]
 
-    // Faster reveal animations
-    const delays = [3, 3.3, 3.6]
-    const maxScale = isMobile ? 25 : 45
-
+    // Use staggered animations for better performance
     document.querySelectorAll(".revealer svg").forEach((el, i) => {
       gsap.to(el, {
-        scale: maxScale,
-        duration: 1,
+        scale: svgScale,
+        duration: isMobile ? 0.8 : 1,
         ease: "power4.inOut",
         delay: delays[i],
         onComplete: () => {
@@ -100,6 +138,7 @@ export default function Loader({ onComplete }) {
       })
     })
 
+    // Optimize final animations
     gsap.to(".header h1", {
       onStart: () => {
         gsap.to(".toggle-btn", {
@@ -110,15 +149,15 @@ export default function Loader({ onComplete }) {
         gsap.to(".line p", {
           y: 0,
           duration: 0.7,
-          stagger: 0.07,
+          stagger: isMobile ? 0.05 : 0.07,
           ease: "power3.out",
         })
       },
       rotateY: 0,
       opacity: 1,
-      duration: 1.2,
+      duration: isMobile ? 1 : 1.2,
       ease: "power3.out",
-      delay: 4.2,
+      delay: delays[2] + 0.6,
     })
   }
 
@@ -128,7 +167,7 @@ export default function Loader({ onComplete }) {
   }
 
   return (
-    <div className="loader">
+    <div className="loader" ref={loaderRef}>
       <div className="count-wrapper">
         <div className="count">
           <div className="digit">
