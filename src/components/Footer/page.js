@@ -14,7 +14,7 @@ export const Footer = () => {
           </div>
           <div className={styles.social}>
             <div className={styles.wrapper}>
-              <a href="https://wa.me/yourwhatsappnumber" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/917034926395" target="_blank" rel="noopener noreferrer">
                 <FaWhatsapp className={styles.icon} />
               </a>
             </div>
@@ -24,8 +24,11 @@ export const Footer = () => {
               </a>
             </div>
             <div className={styles.wrapper}>
-              <LinkedInLogoIcon className={styles.icon} />
+              <a href="https://www.linkedin.com/company/star-shape" target="_blank" rel="noopener noreferrer">
+             <LinkedInLogoIcon className={styles.icon} />
+              </a>
             </div>
+
           </div>
         </div>
         <div className={styles.content}>

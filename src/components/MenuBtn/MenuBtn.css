@@ -117,7 +117,7 @@
   height: 60px;
   border-radius: 100%;
   clip-path: circle(10% at 50% 50%);
-  background-color: burlywood;
+  background-color: #f90;
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   z-index: 10;
   overflow: hidden;

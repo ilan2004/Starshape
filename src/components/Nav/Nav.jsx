@@ -230,18 +230,31 @@ const Nav = () => {
          
         </div>
         <div className="col col-2">
-          <div className="socials">
-            <div className="sub-col">
-              <p>Instagram</p>
-              <p>LinkedIn</p>
-              <p>Twitter</p>
-              <p>Facebook</p>
-              <br />
-              <p>01 62 31 82 42</p>
-            </div>
-          </div>
+        <div className="socials">
+  <div className="sub-col">
+    <p>
+      <a href="https://www.instagram.com/thestarshape/" target="_blank" rel="noopener noreferrer">
+        Instagram
+      </a>
+    </p>
+    <p>
+      <a href="https://www.linkedin.com/company/star-shape" target="_blank" rel="noopener noreferrer">
+        LinkedIn
+      </a>
+    </p>
+    <p>
+      <a href="https://wa.me/7034926395" target="_blank" rel="noopener noreferrer">
+        WhatsApp
+      </a>
+    </p>
+    <p>
+    </p>
+    <br />
+  </div>
+</div>
+
           <div className="video-wrapper">
-            <video src="/videos/compressed1.mp4" muted autoPlay loop />
+            <video src="" muted autoPlay loop />
           </div>
           
         </div>
