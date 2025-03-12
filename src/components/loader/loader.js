@@ -1,193 +1,137 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useLayoutEffect } from "react"
 import gsap from "gsap"
 import './loader.css'
 
+// Create a global variable outside of React component lifecycle
+// This will persist across route changes but be reset on page refresh
+let hasVisitedInThisSession = false;
+
 export default function Loader({ onComplete }) {
-  // Track if the loader has already been shown in this session
-  const [loaderShown, setLoaderShown] = useState(false)
-  const loaderRef = useRef(null)
-  
-  useEffect(() => {
-    // On component mount, check if loader has been shown before
-    const hasSeenLoader = sessionStorage.getItem('loaderShown') === 'true'
-    
-    if (!hasSeenLoader) {
-      // First visit - show the loader
-      runAnimation()
-      // Mark loader as shown for this session
-      sessionStorage.setItem('loaderShown', 'true')
-    } else {
-      // Returning visit or internal navigation - skip the loader
-      setLoaderShown(true)
-      if (onComplete) onComplete()
+  // Start with loader enabled by default for initial page load
+  const [shouldAnimate, setShouldAnimate] = useState(true)
+
+  useLayoutEffect(() => {
+    // If we've already visited in this session, skip the animation
+    if (hasVisitedInThisSession) {
+      setShouldAnimate(false)
+      if (onComplete) setTimeout(onComplete, 0)
+      return
     }
-    
-    // Add resize handler for better responsiveness
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+
+    // Mark that we've visited in this session
+    hasVisitedInThisSession = true
   }, [onComplete])
-  
-  const handleResize = () => {
-    if (!loaderShown && loaderRef.current) {
-      // Reset and re-run animation on resize
-      gsap.killTweensOf(".count, .count-wrapper, .revealer svg, .header h1, .toggle-btn, .line p")
-      runAnimation()
+
+  useEffect(() => {
+    // Skip all animations if we shouldn't animate
+    if (!shouldAnimate) {
+      return
     }
-  }
-  
-  const runAnimation = () => {
-    // Improved mobile detection with breakpoints
-    const screenWidth = window.innerWidth
-    const isMobile = screenWidth < 768
-    const isSmallMobile = screenWidth < 375
-    
-    // Dynamic sizing based on screen width
-    const baseSize = Math.min(screenWidth * 0.25, isMobile ? 180 : 360)
-    const wrapperWidth = baseSize * 0.5
-    const wrapperHeight = baseSize
-    const countWidth = baseSize * 1.5
-    const finalPosition = screenWidth - wrapperWidth
-    const stepDistance = finalPosition / 3
-    
-    // Fixed scale values for SVGs to maintain sharpness
-    // Using integer scale values helps preserve crisp edges
-    const svgScale = isMobile ? (isSmallMobile ? 14 : 18) : 45
-    
-    // Adjust timing for mobile (faster on mobile)
-    const stepDuration = isMobile ? 0.4 : 0.5
-    const revealDelay = isMobile ? 0.2 : 0.3
-    const baseDelay = isMobile ? 2.5 : 3
-    
+
+    const isMobile = window.innerWidth < 768
+    const windowWidth = window.innerWidth
+    const wrapperWidth = isMobile ? 90 : 180
+    const finalPosition = windowWidth - wrapperWidth
+    const stepDistance = finalPosition / 3 // Reduced steps to 3
     const tl = gsap.timeline()
 
-    // Set initial styles dynamically based on screen size
+    // Set initial styles based on device
     gsap.set(".digit h1", {
-      fontSize: `${baseSize}px`,
+      fontSize: isMobile ? "180px" : "360px",
     })
 
     gsap.set(".count-wrapper", {
       width: wrapperWidth,
-      height: wrapperHeight,
+      height: isMobile ? 180 : 360,
     })
 
     gsap.set(".count", {
-      width: countWidth,
-      height: wrapperHeight,
-      x: -countWidth,
+      width: isMobile ? 270 : 540, // Reduced width for 3 digits
+      height: isMobile ? 180 : 360,
+      x: isMobile ? -270 : -540, // Adjusted position for 3 digits
     })
 
     gsap.set(".digit", {
       width: wrapperWidth,
-      height: wrapperHeight,
-    })
-
-    // Set SVG rendering to optimize clarity
-    gsap.set(".revealer svg", { 
-      scale: 0,
-      transformOrigin: "center center",
-      willChange: "transform"
-    })
-    
-    // Ensure SVGs render crisply by disabling antialiasing
-    document.querySelectorAll(".revealer svg").forEach(svg => {
-      svg.setAttribute('shape-rendering', 'crispEdges')
-      
-      // Set viewBox to match actual dimensions for better scaling
-      const width = parseInt(svg.getAttribute('width'))
-      const height = parseInt(svg.getAttribute('height'))
-      svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
-      
-      // Ensure pixel-perfect alignment
-      svg.style.width = `${width}px`
-      svg.style.height = `${height}px`
+      height: isMobile ? 180 : 360,
     })
 
     // Faster initial animation
     tl.to(".count", {
-      x: -baseSize,
-      duration: stepDuration,
-      delay: 0.3,
+      x: isMobile ? -180 : -360,
+      duration: 0.5, // Reduced from 0.85
+      delay: 0.3, // Reduced from 0.5
       ease: "power4.inOut",
     })
 
-    // Animation for each step
+    // Animation for each step (3 instead of 6)
     for (let i = 1; i <= 3; i++) {
-      const xPosition = -baseSize + i * wrapperWidth
+      const xPosition = (isMobile ? -180 : -360) + i * wrapperWidth
       tl.to(".count", {
         x: xPosition,
-        duration: stepDuration,
+        duration: 0.5, // Reduced from 0.85
         ease: "power4.inOut",
         onStart: () => {
           gsap.to(".count-wrapper", {
             x: stepDistance * i,
-            duration: stepDuration,
+            duration: 0.5, // Reduced from 0.85
             ease: "power4.inOut",
           })
         },
       })
     }
 
-    // Faster reveal animations with staggered timing
-    const delays = [
-      baseDelay, 
-      baseDelay + revealDelay, 
-      baseDelay + (revealDelay * 2)
-    ]
+    gsap.set(".revealer svg", { scale: 0 })
 
-    // Use staggered animations for better performance
+    // Faster reveal animations
+    const delays = [3, 3.3, 3.6] // Reduced from [6, 6.5, 7]
+    const maxScale = isMobile ? 25 : 45
+
     document.querySelectorAll(".revealer svg").forEach((el, i) => {
-      // Apply hardware acceleration for smoother scaling
-      el.style.backfaceVisibility = 'hidden'
-      el.style.perspective = '1000'
-      
       gsap.to(el, {
-        scale: svgScale,
-        duration: isMobile ? 0.8 : 1,
+        scale: maxScale,
+        duration: 1, // Reduced from 1.5
         ease: "power4.inOut",
         delay: delays[i],
-        force3D: true, // Force 3D transforms for hardware acceleration
         onComplete: () => {
           if (i === delays.length - 1) {
-            // Animation complete - mark as shown
-            setLoaderShown(true)
             if (onComplete) onComplete()
           }
         },
       })
     })
 
-    // Optimize final animations
     gsap.to(".header h1", {
       onStart: () => {
         gsap.to(".toggle-btn", {
           scale: 1,
-          duration: 0.7,
+          duration: 0.7, // Reduced from 1
           ease: "power4.inOut",
         })
         gsap.to(".line p", {
           y: 0,
-          duration: 0.7,
-          stagger: isMobile ? 0.05 : 0.07,
+          duration: 0.7, // Reduced from 1
+          stagger: 0.07, // Reduced from 0.1
           ease: "power3.out",
         })
       },
       rotateY: 0,
       opacity: 1,
-      duration: isMobile ? 1 : 1.2,
+      duration: 1.2, // Reduced from 2
       ease: "power3.out",
-      delay: delays[2] + 0.6,
+      delay: 4.2, // Reduced from 8
     })
-  }
+  }, [onComplete, shouldAnimate])
 
-  // If loader has already been shown, don't render it
-  if (loaderShown) {
+  // If we're not animating, don't render the loader
+  if (!shouldAnimate) {
     return null
   }
 
   return (
-    <div className="loader" ref={loaderRef}>
+    <div className="loader">
       <div className="count-wrapper">
         <div className="count">
           <div className="digit">
@@ -217,27 +161,51 @@ export default function Loader({ onComplete }) {
       </div>
 
       <div className="revealer revealer-1">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            d="M116 20L98 91L195 193L192 195L91 100L20 117L195 201L20 284L90 302L192 207L194 209L98 310L117 380L201 205L284 380L302 310L206 209L207 208L310 302L380 283L205 201L380 116L309 100L208 195L207 193L302 91L284 20L199 195Z"
+            d="M 115.73 20 L 98.2 91.46 L 195 193 L 192 195 
+                L 91.46 99.55 L 20 117.08 L 195.28 200.67 
+                L 20 284.27 L 90.11 301.8 L 192 207 
+                L 194 209 L 98.2 309.89 L 117.08 380 
+                L 200.67 204.72 L 284.27 380 L 301.8 309.89 
+                L 206.07 208.76 L 207 208 L 309.89 301.8 
+                L 380 282.92 L 204.72 200.67 L 380 115.73 
+                L 308.54 99.55 L 208 195 L 207 193 
+                L 301.8 91.46 L 284.27 20 L 199.33 195.28 Z"
             fill="white"
           />
         </svg>
       </div>
 
       <div className="revealer revealer-2">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            d="M116 20L98 91L195 193L192 195L91 100L20 117L195 201L20 284L90 302L192 207L194 209L98 310L117 380L201 205L284 380L302 310L206 209L207 208L310 302L380 283L205 201L380 116L309 100L208 195L207 193L302 91L284 20L199 195Z"
+            d="M 115.73 20 L 98.2 91.46 L 195 193 L 192 195 
+                L 91.46 99.55 L 20 117.08 L 195.28 200.67 
+                L 20 284.27 L 90.11 301.8 L 192 207 
+                L 194 209 L 98.2 309.89 L 117.08 380 
+                L 200.67 204.72 L 284.27 380 L 301.8 309.89 
+                L 206.07 208.76 L 207 208 L 309.89 301.8 
+                L 380 282.92 L 204.72 200.67 L 380 115.73 
+                L 308.54 99.55 L 208 195 L 207 193 
+                L 301.8 91.46 L 284.27 20 L 199.33 195.28 Z"
             fill="#f24822"
           />
         </svg>
       </div>
 
       <div className="revealer revealer-3">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+        <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            d="M116 20L98 91L195 193L192 195L91 100L20 117L195 201L20 284L90 302L192 207L194 209L98 310L117 380L201 205L284 380L302 310L206 209L207 208L310 302L380 283L205 201L380 116L309 100L208 195L207 193L302 91L284 20L199 195Z"
+            d="M 115.73 20 L 98.2 91.46 L 195 193 L 192 195 
+                L 91.46 99.55 L 20 117.08 L 195.28 200.67 
+                L 20 284.27 L 90.11 301.8 L 192 207 
+                L 194 209 L 98.2 309.89 L 117.08 380 
+                L 200.67 204.72 L 284.27 380 L 301.8 309.89 
+                L 206.07 208.76 L 207 208 L 309.89 301.8 
+                L 380 282.92 L 204.72 200.67 L 380 115.73 
+                L 308.54 99.55 L 208 195 L 207 193 
+                L 301.8 91.46 L 284.27 20 L 199.33 195.28 Z"
             fill="black"
           />
         </svg>
