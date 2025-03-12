@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <div>
-      {showLoader && <Loader onComplete={() => setShowLoader(false)} isMobile={isMobile} />}
+      <Loader/>
       <Hero videoSrc={videoSrc} />
       <Hook />
       <Services />
